@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paroles - BAGARE - Coeur des Braves</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex flex-wrap justify-between items-center">
+            <a href="../index.html" class="text-xl font-bold">Coeur des Braves</a>
+            <a href="../chansons.html" class="back-to-list-btn text-sm mt-2 sm:mt-0">Retour à la liste</a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-6 pt-20">
+        <header class="text-center my-8">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700 mb-2">BAGARE</h2>
+        </header>
+
+        <section class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+            <div class="lyrics-container text-left sm:text-lg">
+                <p>
+<B>Refrain:</B>
+Araban bagare
+gipuzkun bagera
+xiberun bagire
+ta bizkaian bagara
+Araban bagare
+gipuzkun bagera
+xiberun bagire
+ta bizkaian bagara
+baita ere Lapurdi ta</BR>
+Guztiok gara euskaldun
+guztiok anaiak gara
+nahiz eta hitz ezberdinez
+bat bera dugu hizkera
+bagare,bagera 
+bagire bagara
+euskera azkartzeko
+oraintxe dugu aukera</BR>
+<B>Refrain</B></BR>
+Herri bat dugu osatzen 
+eta gure zabarkeriz
+ez daigun utzi hondatzen oraintxe dugu aukera
+Bagare,bagera,
+bagire bagara
+euskadi askatzeko
+oraintxe dugu aukera</BR>
+<B>Refrain</B>
+                </p>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
+        <p>&copy; <span id="year"></span> [Nom de votre Chœur]. Tous droits réservés.</p>
+    </footer>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

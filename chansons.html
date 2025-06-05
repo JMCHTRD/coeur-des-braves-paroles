@@ -1,0 +1,162 @@
+!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Chansons - Coeur des Braves - Suresnes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .song-item:hover { 
+            transform: translateY(-2px) scale(1.01); 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
+            background-color: #f0f9ff; /* light blue hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<!-- Barre de Navigation -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex flex-wrap justify-between items-center">
+            <a href="index.html" class="text-xl font-bold">Coeur des Braves - Suresnes</a>
+            <div class="space-x-4 mt-2 sm:mt-0">
+                <a href="index.html" class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors">Accueil</a>
+                <a href="chansons.html" class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors font-semibold">Liste des Chansons</a>
+                <a href="nous-rejoindre.html" class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors">Nous Rejoindre</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-4 md:p-6">
+        <header class="text-center my-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-blue-700 mb-4">Notre Répertoire</h2>
+            <p class="text-lg text-gray-600">Cliquez sur un titre pour afficher les paroles.</p>
+        </header>
+
+        <!-- Section pour une recherche/filtrage -->
+        <div class="mb-8 max-w-xl mx-auto">
+            <input type="text" id="searchInput" onkeyup="filterSongs()" placeholder="Rechercher une chanson..."
+                   class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow">
+        </div>
+
+        <ul id="songList" class="space-y-3 md:space-y-4">
+            <!-- Les chansons sont maintenant listées par ordre alphabétique -->
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/amazing-grace.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    AMAZING GRACE
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/arrantzaleak.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    ARRANTZALEAK
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/bagare.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    BAGARE
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/bella-ciao.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    BELLA CIAO
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/drunken-sailor.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    DRUNKEN SAILOR
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/hegoak.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    HEGOAK
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/il-est-un-coin-de-france.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    IL EST UN COIN DE FRANCE
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/la-ballade-nord-irlandaise.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    LA BALLADE NORD IRLANDAISE
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/la-complainte-de-la-butte.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    LA COMPLAINTE DE LA BUTTE
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/la-romance-de-paris.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    LA ROMANCE DE PARIS
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/les-braves.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    LES BRAVES
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/les-champs-elysees.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    LES CHAMPS ELYSEES
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/les-fetes-de-mauleon.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    LES FETES DE MAULEON
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/siffler-sur-la-colline.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    SIFFLER SUR LA COLLINE 
+                </a>
+            </li>
+            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
+                <a href="paroles/un-gamin-de-paris.html" class="block text-blue-600 hover:text-blue-800 text-lg font-medium">
+                    UN GAMIN DE PARIS
+                </a>
+            </li>
+            <!-- Ajoutez d'autres chansons ici en suivant le même format et en maintenant l'ordre alphabétique -->
+        </ul>
+         <p id="noResultsMessage" class="text-center text-gray-500 mt-8" style="display:none;">Aucune chanson ne correspond à votre recherche.</p>
+    </main>
+
+    <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
+        <p>&copy; <span id="year"></span> Coeur des Braves - Suresnes. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function filterSongs() {
+            let input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Normalize pour ignorer les accents
+            ul = document.getElementById("songList");
+            li = ul.getElementsByTagName('li');
+            let visibleCount = 0;
+
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = (a.textContent || a.innerText).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                    visibleCount++;
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+             // Afficher ou masquer le message "aucun résultat"
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            if (visibleCount === 0 && filter.length > 0) { // Affiche le message seulement si une recherche est active et ne donne pas de résultat
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
