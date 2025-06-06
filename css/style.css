@@ -1,44 +1,45 @@
 /* css/style.css */
-/* Vous pouvez laisser ce fichier vide si Tailwind CSS suffit, */
-/* ou ajouter des styles personnalisés plus complexes ici. */
 
-body {
-    scroll-behavior: smooth; /* Défilement doux pour les ancres si vous en utilisez */
+/* Définition des couleurs personnalisées */
+:root {
+  --couleur-principale: #005A31; /* Un vert sapin pour le bandeau */
+  --couleur-principale-hover: #004526; /* Une version plus foncée pour le survol */
+  --couleur-titres: #D4AF37; /* Une couleur or/moutarde pour les titres */
+  --couleur-liens: #005A31; /* La même couleur que le bandeau pour les liens */
+  --couleur-liens-hover: #D4AF37; /* La couleur des titres pour le survol des liens */
 }
 
-/* Améliorer la lisibilité des paroles sur mobile et ordinateur */
-.lyrics-container {
-    font-size: 1.1rem;    /* Taille de police de base pour les paroles */
-    line-height: 1.7;     /* Hauteur de ligne pour une meilleure lecture */
-    white-space: pre-line; /* Respecte les sauts de ligne du HTML, utile pour les poèmes/paroles */
+/* Application des couleurs sur des classes personnalisées */
+
+/* Pour le bandeau de navigation */
+.bandeau-principal {
+  background-color: var(--couleur-principale);
 }
 
-.lyrics-container p {
-    margin-bottom: 1.25em; /* Espace entre les couplets/paragraphes */
+/* Pour le survol des liens dans le bandeau */
+.lien-bandeau:hover {
+  background-color: var(--couleur-principale-hover);
 }
 
-.lyrics-container strong { /* Style pour les indications comme "Refrain" */
-    color: #1d4ed8; /* Un bleu plus foncé, tailwind blue-700 */
-    font-weight: 600; /* semi-bold */
+/* Pour le lien actif dans le menu mobile */
+.lien-mobile-actif {
+    background-color: var(--couleur-principale-hover);
 }
 
-@media (min-width: 768px) { /* Pour les écrans plus grands (tablettes et ordinateurs) */
-    .lyrics-container {
-        font-size: 1.2rem; /* Police un peu plus grande */
-    }
+/* Pour les titres principaux des pages (ex: "Bienvenue !", "Notre Répertoire") */
+.titre-page {
+  color: var(--couleur-titres);
 }
 
-/* Style pour le bouton "Retour à la liste" sur les pages de paroles */
-.back-to-list-btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #3b82f6; /* Tailwind blue-500 */
-    color: white;
-    border-radius: 0.375rem; /* rounded-md */
-    text-decoration: none;
-    transition: background-color 0.2s ease-in-out;
+/* Pour les sous-titres dans les sections */
+.sous-titre-section {
+  color: var(--couleur-principale);
 }
 
-.back-to-list-btn:hover {
-    background-color: #2563eb; /* Tailwind blue-600 */
+/* Pour les liens dans le corps de la page (ex: liste des chansons) */
+.lien-contenu {
+  color: var(--couleur-liens);
+}
+.lien-contenu:hover {
+  color: var(--couleur-liens-hover);
 }
