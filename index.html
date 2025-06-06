@@ -5,23 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accueil - Coeur des Braves - Suresnes</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css"> <!-- Votre CSS personnalisé est lié ici -->
     <style>
         /* Police Inter de Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        /* Plus besoin de .nav-sticky-padding, géré par JS */
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Barre de Navigation -->
-    <nav id="main-nav" class="bg-blue-600 text-white p-4 shadow-md fixed top-0 left-0 right-0 z-50">
+    <!-- Barre de Navigation avec la nouvelle classe de couleur -->
+    <nav id="main-nav" class="bandeau-principal text-white p-4 shadow-md fixed top-0 left-0 right-0 z-50">
         <div class="container mx-auto flex flex-wrap justify-between items-center">
             <a href="index.html" class="text-xl font-bold">Coeur des Braves - Suresnes</a>
 
             <!-- Bouton Hamburger pour mobile -->
-            <button id="menu-button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+            <button id="menu-button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white lien-bandeau" aria-controls="mobile-menu" aria-expanded="false">
                 <span class="sr-only">Ouvrir le menu principal</span>
                 <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-8 6h8" />
@@ -31,40 +30,39 @@
                 </svg>
             </button>
 
-            <!-- Liens du menu pour grand écran -->
+            <!-- Liens du menu pour grand écran avec les nouvelles classes -->
             <div class="hidden md:flex md:items-center md:space-x-4 w-auto">
-                <a href="index.html" class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors font-semibold">Accueil</a>
-                <a href="chansons.html" class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors">Liste des Chansons</a>
-                <a href="nous-rejoindre.html" class="px-3 py-2 rounded-md hover:bg-blue-700 transition-colors">Nous Rejoindre</a>
+                <a href="index.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau font-semibold">Accueil</a>
+                <a href="chansons.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau">Liste des Chansons</a>
+                <a href="nous-rejoindre.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau">Nous Rejoindre</a>
             </div>
         </div>
-        <!-- Menu mobile, affiché/caché par JS -->
+        <!-- Menu mobile avec les nouvelles classes -->
         <div id="mobile-menu" class="hidden md:hidden">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-blue-700" aria-current="page">Accueil</a>
-                <a href="chansons.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-100 hover:bg-blue-700 hover:text-white">Liste des Chansons</a>
-                <a href="nous-rejoindre.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-100 hover:bg-blue-700 hover:text-white">Nous Rejoindre</a>
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-mobile-actif" aria-current="page">Accueil</a>
+                <a href="chansons.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau">Liste des Chansons</a>
+                <a href="nous-rejoindre.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau">Nous Rejoindre</a>
             </div>
         </div>
     </nav>
 
-    <!-- Contenu Principal avec padding pour la nav fixe ajusté par JS -->
+    <!-- Contenu Principal -->
     <main id="main-content" class="container mx-auto p-4 md:p-6"> 
         <header class="text-center my-8">
-            <h2 class="text-3xl sm:text-4xl font-bold text-blue-700 mb-4">Bienvenue !</h2>
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 titre-page">Bienvenue !</h2>
             <p class="text-lg text-gray-600">Découvrez les paroles de nos chansons et chantez avec nous.</p>
         </header>
 
         <section class="bg-white p-6 sm:p-8 rounded-lg shadow-lg mb-8">
-            <h3 class="text-2xl font-semibold text-blue-600 mb-4">Le Cœur des Braves : L'Écho du Rugby en Harmonie</h3>
+            <h3 class="text-2xl font-semibold mb-4 sous-titre-section">Le Cœur des Braves : L'Écho du Rugby en Harmonie</h3>
             <p class="mb-4 text-gray-700 leading-relaxed">
-                Né en 2007 dans l'effervescence de la Coupe du Monde de Rugby au Stade Jean Moulin à Suresnes, le "Cœur des Braves" est une aventure humaine issue d'une passion partagée. L'idée ? Transposer la force et la solidarité du rugby en une harmonie vocale.<br>
-                Composé majoritairement d'anciens rugbymen, ces hommes habitués à la ferveur des stades ont trouvé une nouvelle façon de faire vibrer. Les chants de supporters ont évolué vers un répertoire où la puissance des voix se mêle à l'émotion brute, incarnant les valeurs du rugby : esprit d'équipe, convivialité et force tranquille.<br>
-                Plus qu'un chœur, c'est la mélodie d'une passion inébranlable. Des terrains aux scènes, le "Cœur des Braves" porte haut les couleurs de la fraternité, prouvant que l'esprit du rugby continue d'inspirer et de rassembler, bien au-delà du coup de sifflet final.
+                Né en 2007 dans l'effervescence de la Coupe du Monde de Rugby au Stade Jean Moulin à Suresnes, le "Cœur des Braves" est une aventure humaine issue d'une passion partagée. L'idée ? Transposer la force et la solidarité du rugby en une harmonie vocale.</BR>
+Composé à l'origine d'anciens rugbymen, le chœur s'est depuis enrichi de voix féminines, créant une nouvelle dynamique. Ensemble, ces hommes et ces femmes habitués à la ferveur des stades ont trouvé une nouvelle façon de faire vibrer. Les chants de supporters ont évolué vers un répertoire où la puissance des voix se mêle à l'émotion brute, incarnant les valeurs du rugby : esprit d'équipe, convivialité et force tranquille.</BR>
+Plus qu'un chœur, c'est la mélodie d'une passion inébranlable. Des terrains aux scènes, le "Cœur des Braves" porte haut les couleurs de la fraternité, prouvant que l'esprit du rugby continue d'inspirer et de rassembler, bien au-delà du coup de sifflet final.
             </p>
-            <h3 class="text-2xl font-semibold text-blue-600 mb-4">Notre Vision</h3>
+            <h3 class="text-2xl font-semibold mb-4 sous-titre-section">Notre Vision</h3>
             <p class="mb-4 text-gray-700 leading-relaxed">
-                Le Coeur des Braves constitué d’une quinzaine de choristes vous invite à découvrir les trésors du patrimoine régional français, de la chanson française et l’esprit des chants marins. Notre prestation, vous fera parcourir des paysages variés, des Pyrénées avec « Hegoak » et « Bagare », jusqu’aux côtes bretonnes avec « Les filles de Lorient » et l’écho des ports avec « Drunken Sailor ». Sans oublier un détour par Paris avec « Un gamin de Paris » et une évocation des traditions avec « Se Canto », hymne de la joie et de l’unité. Chaque chant, accompagné à la guitare et à l’accordéon, promet une immersion dans l’âme de chaque région et de ses habitants, créant un pont entre les générations et les cultures.<br>
                 Le Coeur des Braves, constitué d’une vingtaine de choristes, dont une grande partie sont d'anciens rugbymen partageant la même passion pour le chant et la convivialité, vous invite à un voyage musical à travers les continents et les époques. Découvrez les trésors du patrimoine populaire traditionnel mondial, de la chanson contemporaine internationale, sans oublier les pépites de la chanson française et l’esprit entraînant des chants marins.<br>
                 Notre prestation vous fera parcourir des paysages sonores variés : des mélodies envoûtantes d'ailleurs aux rythmes actuels qui font vibrer la planète, en passant par l'émotion des classiques français comme « Un gamin de Paris » ou la force des chants de tradition tels que « Se Canto ». Nous conserverons bien sûr l'énergie de nos côtes avec des incontournables comme « Les filles de Lorient » ou « Drunken Sailor », et l'âme des régions avec « Hegoak » et « Bagare ».<br>
                 Chaque chant, accompagné à la guitare, à l’accordéon, et parfois d'autres couleurs instrumentales, promet une immersion dans l’âme de chaque culture et de ses habitants, créant un pont vibrant entre les générations et les peuples du monde.
@@ -129,7 +127,6 @@
                 setTimeout(adjustMainPadding, 50); 
             });
         }
-
     </script>
 </body>
 </html>

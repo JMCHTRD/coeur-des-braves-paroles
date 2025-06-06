@@ -1,106 +1,190 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paroles - LE JAZZ ET LA JAVA - Coeur des Braves</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <!-- Le titre de la page sera remplacé par le script -->
+  <title>
+   Paroles - LE JAZZ ET LA JAVA - Coeur des Braves - Suresnes
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <!-- Le chemin vers le CSS est ../ car le fichier est dans le dossier /paroles/ -->
+  <link href="../css/style.css" rel="stylesheet"/>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
+  </style>
+ </head>
+ <body class="bg-gray-50 text-gray-800">
+  <!-- La barre de navigation complète et responsive -->
+  <nav class="bandeau-principal text-white p-4 shadow-md fixed top-0 left-0 right-0 z-50" id="main-nav">
+   <div class="container mx-auto flex flex-wrap justify-between items-center">
+    <!-- Les liens ici utilisent ../ pour remonter d'un dossier -->
+    <a class="text-xl font-bold" href="../index.html">
+     Coeur des Braves - Suresnes
+    </a>
+    <button aria-controls="mobile-menu" aria-expanded="false" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white lien-bandeau" id="menu-button">
+     <span class="sr-only">
+      Ouvrir le menu principal
+     </span>
+     <svg aria-hidden="true" class="block h-6 w-6" fill="none" id="icon-open" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6h16M4 12h16m-8 6h8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      </path>
+     </svg>
+     <svg aria-hidden="true" class="hidden h-6 w-6" fill="none" id="icon-close" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      </path>
+     </svg>
+    </button>
+    <div class="hidden md:flex md:items-center md:space-x-4 w-auto">
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../index.html">
+      Accueil
+     </a>
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../chansons.html">
+      Liste des Chansons
+     </a>
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../nous-rejoindre.html">
+      Nous Rejoindre
+     </a>
+    </div>
+   </div>
+   <div class="hidden md:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../index.html">
+      Accueil
+     </a>
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../chansons.html">
+      Liste des Chansons
+     </a>
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../nous-rejoindre.html">
+      Nous Rejoindre
+     </a>
+    </div>
+   </div>
+  </nav>
+  <!-- L'id="main-content" est ajouté pour le script -->
+  <main class="container mx-auto p-4 md:p-6" id="main-content">
+   <header class="text-center my-8">
+    <!-- Le titre de la chanson sera remplacé par le script -->
+    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 titre-page">
+     LE JAZZ ET LA JAVA
+    </h2>
+   </header>
+   <section class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+    <!-- Le contenu des paroles sera remplacé par le script -->
+    <div class="lyrics-container text-left sm:text-lg">
+     <p>
+      Quand le jazz est-</BR>
+Quand le jazz est là</BR>
+La java s'en-</BR>
+La java s'en va</BR>
+Il y a de l'orage dans l'air</BR>
+Il y a de l'eau dans le gaz</BR>
+Entre le jazz et la java</BR></BR>
+      Chaque jour un peu plus</BR>
+Y a le jazz qui s'installe</BR>
+Alors, la rage au cœur</BR>
+La java fait la malle</BR>
+Ses petites fesses en bataille</BR>
+Sous sa jupe fendue</BR>
+Elle écrase sa Gauloise</BR>
+Et s'en va dans la rue</BR></BR>
+      Quand le jazz est-</BR>
+Quand le jazz est là</BR>
+La java s'en-</BR>
+La java s'en va</BR>
+Il y a de l'orage dans l'air</BR>
+Il y a de l'eau dans le gaz</BR>
+Entre le jazz et la java</BR></BR>
+      Quand j'écoute béat</BR>
+Un solo de batterie</BR>
+V'là la java qui râle</BR>
+Au nom de la patrie</BR>
+Mais quand je crie "bravo"</BR>
+À l'accordéoniste</BR>
+C'est le jazz qui m'engueule</BR>
+Me traitant de raciste</BR></BR>
+      Quand le jazz est-</BR>
+Quand le jazz est là</BR>
+La java s'en-</BR>
+La java s'en va</BR>
+Il y a de l'orage dans l'air</BR>
+Il y a de l'eau dans le gaz</BR>
+Entre le jazz et la java</BR></BR>
+      Pour moi, jazz et java</BR>
+C'est du pareil au même</BR>
+J'me soûle à la Bastille</BR>
+Et m'noircis à Harlem</BR>
+Pour moi, jazz et java</BR>
+Dans le fond, c'est tout comme</BR>
+Quand le jazz dit "go, men"</BR>
+La java dit " go, hommes"</BR></BR>
+      Quand le jazz est-</BR>
+Quand le jazz est là</BR>
+La java s'en-</BR>
+La java s'en va</BR>
+Il y a de l'orage dans l'air</BR>
+Il y a de l'eau dans le gaz</BR>
+Entre le jazz et la java</BR></BR>
+      Jazz et java copains</BR>
+Ça doit pouvoir se faire</BR>
+Pour qu'il en soit ainsi</BR>
+Tiens, je partage en frère</BR>
+Je donne au jazz mes pieds</BR>
+Pour marquer son tempo</BR>
+Et je donne à la java mes mains</BR>
+Pour le bas de son dos, wow, wow</BR>
+Et je donne à la java mes mains</BR>
+Pour le bas de son dos</BR>
+     </p>
+    </div>
+   </section>
+  </main>
+  <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
+   <p>
+    ©
+    <span id="year">
+    </span>
+    Coeur des Braves - Suresnes. Tous droits réservés.
+   </p>
+  </footer>
+  <!-- Le script complet est inclus à la fin -->
+  <script>
+   document.getElementById('year').textContent = new Date().getFullYear();
 
-    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex flex-wrap justify-between items-center">
-            <a href="../index.html" class="text-xl font-bold">Coeur des Braves</a>
-            <a href="../chansons.html" class="back-to-list-btn text-sm mt-2 sm:mt-0">Retour à la liste</a>
-        </div>
-    </nav>
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
 
-    <main class="container mx-auto p-4 md:p-6 pt-20">
-        <header class="text-center my-8">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700 mb-2">LE JAZZ ET LA JAVA</h2>
-        </header>
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                iconOpen.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
+            });
+        }
 
-        <section class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
-            <div class="lyrics-container text-left sm:text-lg">
-                <p>
-Quand le jazz est-
-Quand le jazz est là
-La java s'en-
-La java s'en va
-Il y a de l'orage dans l'air
-Il y a de l'eau dans le gaz
-Entre le jazz et la java</BR>
-Chaque jour un peu plus
-Y a le jazz qui s'installe
-Alors, la rage au cœur
-La java fait la malle
-Ses petites fesses en bataille
-Sous sa jupe fendue
-Elle écrase sa Gauloise
-Et s'en va dans la rue</BR>
-Quand le jazz est-
-Quand le jazz est là
-La java s'en-
-La java s'en va
-Il y a de l'orage dans l'air
-Il y a de l'eau dans le gaz
-Entre le jazz et la java</BR>
-Quand j'écoute béat
-Un solo de batterie
-V'là la java qui râle
-Au nom de la patrie
-Mais quand je crie "bravo"
-À l'accordéoniste
-C'est le jazz qui m'engueule
-Me traitant de raciste</BR>
-Quand le jazz est-
-Quand le jazz est là
-La java s'en-
-La java s'en va
-Il y a de l'orage dans l'air
-Il y a de l'eau dans le gaz
-Entre le jazz et la java</BR>
-Pour moi, jazz et java
-C'est du pareil au même
-J'me soûle à la Bastille
-Et m'noircis à Harlem
-Pour moi, jazz et java
-Dans le fond, c'est tout comme
-Quand le jazz dit "go, men"
-La java dit " go, hommes"</BR>
-Quand le jazz est-
-Quand le jazz est là
-La java s'en-
-La java s'en va
-Il y a de l'orage dans l'air
-Il y a de l'eau dans le gaz
-Entre le jazz et la java</BR>
-Jazz et java copains
-Ça doit pouvoir se faire
-Pour qu'il en soit ainsi
-Tiens, je partage en frère
-Je donne au jazz mes pieds
-Pour marquer son tempo
-Et je donne à la java mes mains
-Pour le bas de son dos, wow, wow
-Et je donne à la java mes mains
-Pour le bas de son dos
-                </p>
+        const navElement = document.getElementById('main-nav');
+        const mainContentElement = document.getElementById('main-content');
 
-            </div>
-        </section>
-    </main>
+        function adjustMainPadding() {
+            if (navElement && mainContentElement) {
+                const navHeight = navElement.offsetHeight;
+                mainContentElement.style.paddingTop = navHeight + 'px';
+            }
+        }
 
-    <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
-        <p>&copy; <span id="year"></span> Coeur des Braves. Tous droits réservés.</p>
-    </footer>
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-</body>
+        window.addEventListener('load', adjustMainPadding);
+        window.addEventListener('resize', adjustMainPadding);
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                setTimeout(adjustMainPadding, 50); 
+            });
+        }
+  </script>
+ </body>
 </html>

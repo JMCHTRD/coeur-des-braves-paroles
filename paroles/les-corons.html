@@ -1,88 +1,180 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paroles - LES CORONS - Coeur des Braves</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <!-- Le titre de la page sera remplacé par le script -->
+  <title>
+   Paroles - LES CORONS - Coeur des Braves - Suresnes
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <!-- Le chemin vers le CSS est ../ car le fichier est dans le dossier /paroles/ -->
+  <link href="../css/style.css" rel="stylesheet"/>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
+  </style>
+ </head>
+ <body class="bg-gray-50 text-gray-800">
+  <!-- La barre de navigation complète et responsive -->
+  <nav class="bandeau-principal text-white p-4 shadow-md fixed top-0 left-0 right-0 z-50" id="main-nav">
+   <div class="container mx-auto flex flex-wrap justify-between items-center">
+    <!-- Les liens ici utilisent ../ pour remonter d'un dossier -->
+    <a class="text-xl font-bold" href="../index.html">
+     Coeur des Braves - Suresnes
+    </a>
+    <button aria-controls="mobile-menu" aria-expanded="false" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white lien-bandeau" id="menu-button">
+     <span class="sr-only">
+      Ouvrir le menu principal
+     </span>
+     <svg aria-hidden="true" class="block h-6 w-6" fill="none" id="icon-open" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6h16M4 12h16m-8 6h8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      </path>
+     </svg>
+     <svg aria-hidden="true" class="hidden h-6 w-6" fill="none" id="icon-close" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      </path>
+     </svg>
+    </button>
+    <div class="hidden md:flex md:items-center md:space-x-4 w-auto">
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../index.html">
+      Accueil
+     </a>
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../chansons.html">
+      Liste des Chansons
+     </a>
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../nous-rejoindre.html">
+      Nous Rejoindre
+     </a>
+    </div>
+   </div>
+   <div class="hidden md:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../index.html">
+      Accueil
+     </a>
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../chansons.html">
+      Liste des Chansons
+     </a>
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../nous-rejoindre.html">
+      Nous Rejoindre
+     </a>
+    </div>
+   </div>
+  </nav>
+  <!-- L'id="main-content" est ajouté pour le script -->
+  <main class="container mx-auto p-4 md:p-6" id="main-content">
+   <header class="text-center my-8">
+    <!-- Le titre de la chanson sera remplacé par le script -->
+    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 titre-page">
+     LES CORONS
+    </h2>
+   </header>
+   <section class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+    <!-- Le contenu des paroles sera remplacé par le script -->
+    <div class="lyrics-container text-left sm:text-lg">
+     <p>
+      <b>
+       Refrain :
+      </b></BR>
+      Au nord, c'étaient les corons</BR>
+La terre c'était le charbon</BR>
+Le ciel c'était l'horizon</BR>
+Les hommes des mineurs de fond</BR></BR>
+      Nos fenêtre donnaient</BR>
+sur des f’nêtres semblables</BR>
+Et la pluie mouillait mon cartable</BR>
+Et mon père en rentrant</BR>
+avait les yeux si bleus</BR>
+Que je croyais voir le ciel bleu</BR>
+J'apprenais mes leçons,</BR>
+la joue contre son bras</BR>
+Je crois qu'il était fier de moi</BR>
+Il était généreux</BR>
+comme ceux du pays</BR>
+Et je lui dois ce que je suis</BR></BR>
+      <b>
+       Refrain
+      </b></BR></BR>
+      Et c'était mon enfance,</BR>
+et elle était heureuse</BR>
+Dans la buée des lessiveuses</BR>
+Et j'avais des terrils</BR>
+à défaut de montagnes</BR>
+D'en haut je voyais la campagne</BR>
+Mon père était "gueule noire"</BR>
+comme l'étaient ses parents</BR>
+Ma mère avait les cheveux blancs</BR>
+Ils étaient de la fosse,</BR>
+comme on est d'un pays</BR>
+Grâce à eux je sais qui je suis</BR></BR>
+      <b>
+       Refrain
+      </b></BR></BR>
+      Y'avait à la mairie</BR>
+le jour de la kermesse</BR>
+Une photo de Jean Jaurès</BR>
+Et chaque verre de vin</BR>
+était un diamant rose</BR>
+Posé sur fond de silicose</BR>
+Ils parlaient de 36</BR>
+et des coups de grisou</BR>
+Des accidents du fond du trou</BR>
+Ils aimaient leur métier</BR>
+comme on aime un pays</BR>
+C'est avec eux que j'ai compris.</BR></BR>
+      <b>
+       Refrain
+      </b></BR>
+     </p>
+    </div>
+   </section>
+  </main>
+  <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
+   <p>
+    ©
+    <span id="year">
+    </span>
+    Coeur des Braves - Suresnes. Tous droits réservés.
+   </p>
+  </footer>
+  <!-- Le script complet est inclus à la fin -->
+  <script>
+   document.getElementById('year').textContent = new Date().getFullYear();
 
-    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex flex-wrap justify-between items-center">
-            <a href="../index.html" class="text-xl font-bold">Coeur des Braves</a>
-            <a href="../chansons.html" class="back-to-list-btn text-sm mt-2 sm:mt-0">Retour à la liste</a>
-        </div>
-    </nav>
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
 
-    <main class="container mx-auto p-4 md:p-6 pt-20">
-        <header class="text-center my-8">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700 mb-2">LES CORONS</h2>
-        </header>
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                iconOpen.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
+            });
+        }
 
-        <section class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
-            <div class="lyrics-container text-left sm:text-lg">
-                <p>
-<B>Refrain :</B>
-Au nord, c'étaient les corons
-La terre c'était le charbon
-Le ciel c'était l'horizon
-Les hommes des mineurs de fond</BR>
-Nos fenêtre donnaient
-sur des f’nêtres semblables
-Et la pluie mouillait mon cartable
-Et mon père en rentrant
-avait les yeux si bleus
-Que je croyais voir le ciel bleu
-J'apprenais mes leçons,
-la joue contre son bras
-Je crois qu'il était fier de moi
-Il était généreux
-comme ceux du pays
-Et je lui dois ce que je suis</BR>
-<B>Refrain</B></BR>
-Et c'était mon enfance,
-et elle était heureuse
-Dans la buée des lessiveuses
-Et j'avais des terrils
-à défaut de montagnes
-D'en haut je voyais la campagne
-Mon père était "gueule noire"
-comme l'étaient ses parents
-Ma mère avait les cheveux blancs
-Ils étaient de la fosse,
-comme on est d'un pays
-Grâce à eux je sais qui je suis</BR>
-<B>Refrain</B></BR>
-Y'avait à la mairie
-le jour de la kermesse
-Une photo de Jean Jaurès
-Et chaque verre de vin
-était un diamant rose
-Posé sur fond de silicose
-Ils parlaient de 36
-et des coups de grisou
-Des accidents du fond du trou
-Ils aimaient leur métier
-comme on aime un pays
-C'est avec eux que j'ai compris.</BR>
-<B>Refrain</B></BR>
-                </p>
+        const navElement = document.getElementById('main-nav');
+        const mainContentElement = document.getElementById('main-content');
 
-            </div>
-        </section>
-    </main>
+        function adjustMainPadding() {
+            if (navElement && mainContentElement) {
+                const navHeight = navElement.offsetHeight;
+                mainContentElement.style.paddingTop = navHeight + 'px';
+            }
+        }
 
-    <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
-        <p>&copy; <span id="year"></span> Coeur des Braves. Tous droits réservés.</p>
-    </footer>
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-</body>
+        window.addEventListener('load', adjustMainPadding);
+        window.addEventListener('resize', adjustMainPadding);
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                setTimeout(adjustMainPadding, 50); 
+            });
+        }
+  </script>
+ </body>
 </html>

@@ -1,105 +1,189 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paroles - LE POINCONNEUR DES LILAS - Coeur des Braves</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <!-- Le titre de la page sera remplacé par le script -->
+  <title>
+   Paroles - LE POINCONNEUR DES LILAS - Coeur des Braves - Suresnes
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <!-- Le chemin vers le CSS est ../ car le fichier est dans le dossier /paroles/ -->
+  <link href="../css/style.css" rel="stylesheet"/>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
-
-    <nav class="bg-blue-600 text-white p-4 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex flex-wrap justify-between items-center">
-            <a href="../index.html" class="text-xl font-bold">Coeur des Braves</a>
-            <a href="../chansons.html" class="back-to-list-btn text-sm mt-2 sm:mt-0">Retour à la liste</a>
-        </div>
-    </nav>
-
-    <main class="container mx-auto p-4 md:p-6 pt-20">
-        <header class="text-center my-8">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-700 mb-2">LE POINCONNEUR DES LILAS</h2>
-        </header>
-
-        <section class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
-            <div class="lyrics-container text-left sm:text-lg">
-                <p>
-J'suis l'poinçonneur des Lilas
-Le gars qu'on croise et qu'on n'regarde pas
-Y a pas d'soleil sous la terre
-Drôle de croisière
-Pour tuer l'ennui, j'ai dans ma veste
-Les extraits du Reader-Digest</BR>
-Et dans c'bouquin, y a écrit
-Que des gars s'la coulent douce à Miami
-Pendant c'temps que je fais l'zouave
-Au fond d'la cave
-Paraît qu'y a pas d'sot métier
-Moi j'fais des trous dans des billets</BR>
-J'fais des trous, des petits trous, encore des petits trous
-Des petits trous, des petits trous, toujours des petits trous
-Des trous d'seconde classe
-Des trous d'première classe
-J'fais des trous, des petits trous, encore des petits trous
-Des petits trous, des petits trous, toujours des petits trous
-Des petits trous, des petits trous
+  </style>
+ </head>
+ <body class="bg-gray-50 text-gray-800">
+  <!-- La barre de navigation complète et responsive -->
+  <nav class="bandeau-principal text-white p-4 shadow-md fixed top-0 left-0 right-0 z-50" id="main-nav">
+   <div class="container mx-auto flex flex-wrap justify-between items-center">
+    <!-- Les liens ici utilisent ../ pour remonter d'un dossier -->
+    <a class="text-xl font-bold" href="../index.html">
+     Coeur des Braves - Suresnes
+    </a>
+    <button aria-controls="mobile-menu" aria-expanded="false" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white lien-bandeau" id="menu-button">
+     <span class="sr-only">
+      Ouvrir le menu principal
+     </span>
+     <svg aria-hidden="true" class="block h-6 w-6" fill="none" id="icon-open" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 6h16M4 12h16m-8 6h8" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      </path>
+     </svg>
+     <svg aria-hidden="true" class="hidden h-6 w-6" fill="none" id="icon-close" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      </path>
+     </svg>
+    </button>
+    <div class="hidden md:flex md:items-center md:space-x-4 w-auto">
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../index.html">
+      Accueil
+     </a>
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../chansons.html">
+      Liste des Chansons
+     </a>
+     <a class="px-3 py-2 rounded-md transition-colors lien-bandeau" href="../nous-rejoindre.html">
+      Nous Rejoindre
+     </a>
+    </div>
+   </div>
+   <div class="hidden md:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../index.html">
+      Accueil
+     </a>
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../chansons.html">
+      Liste des Chansons
+     </a>
+     <a class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau" href="../nous-rejoindre.html">
+      Nous Rejoindre
+     </a>
+    </div>
+   </div>
+  </nav>
+  <!-- L'id="main-content" est ajouté pour le script -->
+  <main class="container mx-auto p-4 md:p-6" id="main-content">
+   <header class="text-center my-8">
+    <!-- Le titre de la chanson sera remplacé par le script -->
+    <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 titre-page">
+     LE POINCONNEUR DES LILAS
+    </h2>
+   </header>
+   <section class="bg-white p-6 md:p-8 rounded-lg shadow-lg max-w-2xl mx-auto">
+    <!-- Le contenu des paroles sera remplacé par le script -->
+    <div class="lyrics-container text-left sm:text-lg">
+     <p>
+      J'suis l'poinçonneur des Lilas</BR>
+Le gars qu'on croise et qu'on n'regarde pas</BR>
+Y a pas d'soleil sous la terre</BR>
+Drôle de croisière</BR>
+Pour tuer l'ennui, j'ai dans ma veste</BR>
+Les extraits du Reader-Digest</BR></BR>
+      Et dans c'bouquin, y a écrit</BR>
+Que des gars s'la coulent douce à Miami</BR>
+Pendant c'temps que je fais l'zouave</BR>
+Au fond d'la cave</BR>
+Paraît qu'y a pas d'sot métier</BR>
+Moi j'fais des trous dans des billets</BR></BR>
+      J'fais des trous, des petits trous, encore des petits trous</BR>
+Des petits trous, des petits trous, toujours des petits trous</BR>
+Des trous d'seconde classe</BR>
+Des trous d'première classe</BR>
+J'fais des trous, des petits trous, encore des petits trous</BR>
+Des petits trous, des petits trous, toujours des petits trous</BR>
 Des petits trous, des petits trous</BR>
-J'suis l'poinçonneur des Lilas
-Pour Invalides, changez à Opéra
-Je vis au cœur d'la planète
-J'ai dans la tête
-Un carnaval de confettis
-J'en amène jusque dans mon lit</BR>
-Et sous mon ciel de faïence
-Je n'vois briller que les correspondances
-Parfois je rêve, je divague
-Je vois des vagues
-Et dans la brume au bout du quai
+Des petits trous, des petits trous</BR></BR>
+      J'suis l'poinçonneur des Lilas</BR>
+Pour Invalides, changez à Opéra</BR>
+Je vis au cœur d'la planète</BR>
+J'ai dans la tête</BR>
+Un carnaval de confettis</BR>
+J'en amène jusque dans mon lit</BR></BR>
+      Et sous mon ciel de faïence</BR>
+Je n'vois briller que les correspondances</BR>
+Parfois je rêve, je divague</BR>
+Je vois des vagues</BR>
+Et dans la brume au bout du quai</BR>
 J'vois un bateau qui vient m'chercher</BR>
-Pour m'sortir de ce trou où je fais des trous
-Des petits trous, des petits trous, toujours des petits trous
-Mais l'bateau se taille
-Et j'vois qu'je déraille
-Et je reste dans mon trou à faire des petits trous
-Des petits trous, des petits trous, toujours des petits trous
-Des petits trous, des petits trous
+      Pour m'sortir de ce trou où je fais des trous</BR></BR>
+Des petits trous, des petits trous, toujours des petits trous</BR>
+Mais l'bateau se taille</BR>
+Et j'vois qu'je déraille</BR>
+Et je reste dans mon trou à faire des petits trous</BR>
+Des petits trous, des petits trous, toujours des petits trous</BR>
 Des petits trous, des petits trous</BR>
-J'suis l'poinçonneur des Lilas
-Arts-et-Métiers, direct par Levallois
-J'en ai marre, j'en ai ma claque
-De ce cloaque
-Je voudrais jouer la fille de l'air
-Laisser ma casquette au vestiaire</BR>
-Un jour viendra, j'en suis sûr
-Où j'pourrai m'évader dans la nature
-J'partirai sur la grand route
-Et coûte que coûte
-Et si pour moi, il est plus temps
-Je partirai les pieds devant</BR>
-J'fais des trous, des petits trous, encore des petits trous
-Des petits trous, des petits trous, toujours des petits trous
-Y a d'quoi devenir dingue
-De quoi prendre un flingue
-S'faire un trou, un petit trou, un dernier petit trou
-Un petit trou, un petit trou, un dernier petit trou
-Et on m'mettra dans un grand trou
-Et j'n'entendrai plus parler d'trou, plus jamais d'trou
-De petits trous, de petits trous, de petits trous
-                </p>
+Des petits trous, des petits trous</BR>
+      J'suis l'poinçonneur des Lilas</BR></BR>
+Arts-et-Métiers, direct par Levallois</BR>
+J'en ai marre, j'en ai ma claque</BR>
+De ce cloaque</BR>
+Je voudrais jouer la fille de l'air</BR>
+Laisser ma casquette au vestiaire</BR></BR>
+      Un jour viendra, j'en suis sûr</BR>
+Où j'pourrai m'évader dans la nature</BR>
+J'partirai sur la grand route</BR>
+Et coûte que coûte</BR>
+Et si pour moi, il est plus temps</BR>
+Je partirai les pieds devant</BR></BR>
+      J'fais des trous, des petits trous, encore des petits trous</BR>
+Des petits trous, des petits trous, toujours des petits trous</BR>
+Y a d'quoi devenir dingue</BR>
+De quoi prendre un flingue</BR>
+S'faire un trou, un petit trou, un dernier petit trou</BR>
+Un petit trou, un petit trou, un dernier petit trou</BR>
+Et on m'mettra dans un grand trou</BR>
+Et j'n'entendrai plus parler d'trou, plus jamais d'trou</BR>
+De petits trous, de petits trous, de petits trous</BR>
+     </p>
+    </div>
+   </section>
+  </main>
+  <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
+   <p>
+    ©
+    <span id="year">
+    </span>
+    Coeur des Braves - Suresnes. Tous droits réservés.
+   </p>
+  </footer>
+  <!-- Le script complet est inclus à la fin -->
+  <script>
+   document.getElementById('year').textContent = new Date().getFullYear();
 
-            </div>
-        </section>
-    </main>
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
 
-    <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
-        <p>&copy; <span id="year"></span> Coeur des Braves. Tous droits réservés.</p>
-    </footer>
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
-</body>
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+                menuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                iconOpen.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
+            });
+        }
+
+        const navElement = document.getElementById('main-nav');
+        const mainContentElement = document.getElementById('main-content');
+
+        function adjustMainPadding() {
+            if (navElement && mainContentElement) {
+                const navHeight = navElement.offsetHeight;
+                mainContentElement.style.paddingTop = navHeight + 'px';
+            }
+        }
+
+        window.addEventListener('load', adjustMainPadding);
+        window.addEventListener('resize', adjustMainPadding);
+        if (menuButton) {
+            menuButton.addEventListener('click', () => {
+                setTimeout(adjustMainPadding, 50); 
+            });
+        }
+  </script>
+ </body>
 </html>
