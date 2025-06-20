@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr" data-root-path="..">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paroles - Le Coeur des Braves</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/png" href="../images/logo.png">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="main-content mx-auto" id="main-content">
+        <h2 id="song-title" class="titre-page text-center">Chargement...</h2>
+        <div id="song-lyrics" class="lyrics-container text-center">
+            <!-- Les paroles seront injectées ici par JavaScript -->
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rootPath = document.documentElement.getAttribute('data-root-path') || '.';
+
+            // Fonction pour récupérer les paramètres de l'URL
+            const getQueryParam = (param) => {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            };
+
+            const songId = getQueryParam('song');
+            const songTitleElement = document.getElementById('song-title');
+            const songLyricsElement = document.getElementById('song-lyrics');
+            
+            if (songId) {
+                // Le chemin vers songs.json est maintenant construit dynamiquement
+                fetch(`${rootPath}/songs.json`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erreur réseau lors du chargement de songs.json');
+                        }
+                        return response.json();
+                    })
+                    .then(songsData => {
+                        const song = songsData[songId];
+                        if (song) {
+                            songTitleElement.textContent = song.title;
+                            document.title = song.title + " - Le Coeur des Braves"; // Mettre à jour le titre de l'onglet
+                            songLyricsElement.innerHTML = song.lyrics;
+                        } else {
+                            songTitleElement.textContent = 'Chanson non trouvée';
+                            songLyricsElement.innerHTML = '<p>Désolé, la chanson que vous cherchez n\'a pas été trouvée. Veuillez vérifier le lien et réessayer.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors du chargement des paroles:', error);
+                        songTitleElement.textContent = 'Erreur';
+                        songLyricsElement.innerHTML = '<p>Impossible de charger les paroles pour le moment. Veuillez réessayer plus tard.</p>';
+                    });
+            } else {
+                songTitleElement.textContent = 'Aucune chanson sélectionnée';
+                songLyricsElement.innerHTML = `<p>Veuillez sélectionner une chanson depuis la <a href="${rootPath}/chansons.html">liste des chansons</a>.</p>`;
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-root-path=".">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,48 +14,12 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Barre de Navigation avec la nouvelle classe de couleur -->
-    <nav id="main-nav" class="bandeau-principal text-white p-4 shadow-md fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto flex flex-wrap justify-between items-center">
-            
-            <!-- MODIFICATION ICI : Le logo a été ajouté -->
-            <a href="index.html" class="flex items-center space-x-3">
-                <!-- Assurez-vous que votre logo est dans le dossier /images/ et s'appelle logo.png -->
-                <img src="images/logo.png" alt="Logo du Coeur des Braves" class="h-14 w-auto">
-                <span class="text-xl font-bold">Coeur des Braves - Suresnes</span>
-            </a>
-
-            <!-- Bouton Hamburger pour mobile -->
-            <button id="menu-button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white lien-bandeau" aria-controls="mobile-menu" aria-expanded="false">
-                <span class="sr-only">Ouvrir le menu principal</span>
-                <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-8 6h8" />
-                </svg>
-                <svg id="icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <!-- Liens du menu pour grand écran avec les nouvelles classes -->
-            <div class="hidden md:flex md:items-center md:space-x-4 w-auto">
-                <a href="index.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau font-semibold">Accueil</a>
-                <a href="chansons.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau">Liste des Chansons</a>
-                <a href="nous-rejoindre.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau">Nous Rejoindre</a>
-            </div>
-        </div>
-        <!-- Menu mobile avec les nouvelles classes -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-mobile-actif" aria-current="page">Accueil</a>
-                <a href="chansons.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau">Liste des Chansons</a>
-                <a href="nous-rejoindre.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau">Nous Rejoindre</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Le header sera injecté ici -->
+    <div id="header-placeholder"></div>
 
     <!-- Contenu Principal -->
     <main id="main-content" class="container mx-auto p-4 md:p-6"> 
-        <header class="text-center my-8">
+        <header class="text-center mb-8">
             <h2 class="text-3xl sm:text-4xl font-bold mb-4 titre-page">Bienvenue !</h2>
             <p class="text-lg text-gray-600">Découvrez les paroles de nos chansons et chantez avec nous.</p>
         </header>
@@ -69,9 +33,9 @@
             </p>
             <h3 class="text-2xl font-semibold mb-4 sous-titre-section">Notre Vision</h3>
             <p class="mb-4 text-gray-700 leading-relaxed">
-                Le Coeur des Braves, constitué d’une vingtaine de choristes, dont une grande partie sont d'anciens rugbymen partageant la même passion pour le chant et la convivialité, vous invite à un voyage musical à travers les continents et les époques. Découvrez les trésors du patrimoine populaire traditionnel mondial, de la chanson contemporaine internationale, sans oublier les pépites de la chanson française et l’esprit entraînant des chants marins.<br>
+                Le Coeur des Braves, constitué d'une vingtaine de choristes, dont une grande partie sont d'anciens rugbymen partageant la même passion pour le chant et la convivialité, vous invite à un voyage musical à travers les continents et les époques. Découvrez les trésors du patrimoine populaire traditionnel mondial, de la chanson contemporaine internationale, sans oublier les pépites de la chanson française et l'esprit entraînant des chants marins.<br>
                 Notre prestation vous fera parcourir des paysages sonores variés : des mélodies envoûtantes d'ailleurs aux rythmes actuels qui font vibrer la planète, en passant par l'émotion des classiques français comme « Un gamin de Paris » ou la force des chants de tradition tels que « Se Canto ». Nous conserverons bien sûr l'énergie de nos côtes avec des incontournables comme « Les filles de Lorient » ou « Drunken Sailor », et l'âme des régions avec « Hegoak » et « Bagare ».<br>
-                Chaque chant, accompagné à la guitare, à l’accordéon, et parfois d'autres couleurs instrumentales, promet une immersion dans l’âme de chaque culture et de ses habitants, créant un pont vibrant entre les générations et les peuples du monde.
+                Chaque chant, accompagné à la guitare, à l'accordéon, et parfois d'autres couleurs instrumentales, promet une immersion dans l'âme de chaque culture et de ses habitants, créant un pont vibrant entre les générations et les peuples du monde.
             </p>
             
             <div class="my-6 text-center">
@@ -89,50 +53,10 @@
         </section>
     </main>
 
-    <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
-        <p>&copy; <span id="year"></span> Coeur des Braves - Suresnes. Tous droits réservés.</p>
-    </footer>
+    <!-- Le footer sera injecté ici -->
+    <div id="footer-placeholder"></div>
 
-    <script>
-        // Script pour l'année dans le footer
-        document.getElementById('year').textContent = new Date().getFullYear();
+    <script src="js/main.js"></script>
 
-        // Script pour le menu hamburger
-        const menuButton = document.getElementById('menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const iconOpen = document.getElementById('icon-open');
-        const iconClose = document.getElementById('icon-close');
-
-        menuButton.addEventListener('click', () => {
-            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
-            menuButton.setAttribute('aria-expanded', !isExpanded);
-            mobileMenu.classList.toggle('hidden');
-            iconOpen.classList.toggle('hidden');
-            iconClose.classList.toggle('hidden');
-        });
-
-        // Script pour ajuster le padding du contenu principal en fonction de la hauteur de la nav fixe
-        const navElement = document.getElementById('main-nav');
-        const mainContentElement = document.getElementById('main-content');
-
-        function adjustMainPadding() {
-            if (navElement && mainContentElement) {
-                const navHeight = navElement.offsetHeight;
-                mainContentElement.style.paddingTop = navHeight + 'px';
-            }
-        }
-
-        // Ajuster au chargement
-        window.addEventListener('load', adjustMainPadding);
-        // Ajuster lors du redimensionnement de la fenêtre (utile si la hauteur de la nav change)
-        window.addEventListener('resize', adjustMainPadding);
-        // Ajuster également lorsque le menu mobile est ouvert/fermé, car cela peut affecter la hauteur de la nav sur mobile
-        if (menuButton) {
-            menuButton.addEventListener('click', () => {
-                // Léger délai pour s'assurer que le menu est rendu avant de recalculer
-                setTimeout(adjustMainPadding, 50); 
-            });
-        }
-    </script>
 </body>
 </html>

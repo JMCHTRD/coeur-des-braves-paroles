@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-root-path=".">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,262 +19,97 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-<!-- Barre de Navigation -->
-    <nav id="main-nav" class="bandeau-principal text-white p-4 shadow-md fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto flex flex-wrap justify-between items-center">
-            
-            <!-- MODIFICATION ICI : Logo ajouté avec la classe h-14 -->
-            <a href="index.html" class="flex items-center space-x-3">
-                <img src="images/logo.png" alt="Logo du Coeur des Braves" class="h-14 w-auto">
-                <span class="text-xl font-bold">Coeur des Braves - Suresnes</span>
-            </a>
-
-            <!-- Bouton Hamburger pour mobile -->
-            <button id="menu-button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white lien-bandeau" aria-controls="mobile-menu" aria-expanded="false">
-                <span class="sr-only">Ouvrir le menu principal</span>
-                <svg id="icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-8 6h8" />
-                </svg>
-                <svg id="icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            <!-- Liens du menu pour grand écran -->
-            <div class="hidden md:flex md:items-center md:space-x-4 w-auto">
-                <a href="index.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau">Accueil</a>
-                <a href="chansons.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau font-semibold">Liste des Chansons</a>
-                <a href="nous-rejoindre.html" class="px-3 py-2 rounded-md transition-colors lien-bandeau">Nous Rejoindre</a>
-            </div>
-        </div>
-        <!-- Menu mobile, affiché/caché par JS -->
-        <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau">Accueil</a>
-                <a href="chansons.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-mobile-actif" aria-current="page">Liste des Chansons</a>
-                <a href="nous-rejoindre.html" class="block px-3 py-2 rounded-md text-base font-medium text-white lien-bandeau">Nous Rejoindre</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Le header sera injecté ici -->
+    <div id="header-placeholder"></div>
 
     <main id="main-content" class="container mx-auto p-4 md:p-6">
-        <header class="text-center my-8">
+        <header class="text-center mb-8">
             <h2 class="text-3xl sm:text-4xl font-bold mb-4 titre-page">Notre Répertoire</h2>
             <p class="text-lg text-gray-600">Cliquez sur un titre pour afficher les paroles.</p>
         </header>
 
         <!-- Section pour une recherche/filtrage -->
         <div class="mb-8 max-w-xl mx-auto">
-            <input type="text" id="searchInput" onkeyup="filterSongs()" placeholder="Rechercher une chanson..."
+            <input type="text" id="searchInput" placeholder="Rechercher une chanson..."
                    class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow">
         </div>
 
         <ul id="songList" class="space-y-3 md:space-y-4">
-            <!-- Les chansons listées avec la nouvelle classe de lien -->
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/amazing-grace.html" class="block text-lg font-medium lien-contenu">
-                    AMAZING GRACE
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/arrantzaleak.html" class="block text-lg font-medium lien-contenu">
-                    ARRANTZALEAK
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/bagare.html" class="block text-lg font-medium lien-contenu">
-                    BAGARE
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/bella-ciao.html" class="block text-lg font-medium lien-contenu">
-                    BELLA CIAO
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/drunken-sailor.html" class="block text-lg font-medium lien-contenu">
-                    DRUNKEN SAILOR
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/hegoak.html" class="block text-lg font-medium lien-contenu">
-                    HEGOAK.
-                </a>
-            </li>
-             <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/hey-jude.html" class="block text-lg font-medium lien-contenu">
-                    HEY JUDE
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/il-est-un-coin-de-france.html" class="block text-lg font-medium lien-contenu">
-                    IL EST UN COIN DE FRANCE
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/la-ballade-nord-irlandaise.html" class="block text-lg font-medium lien-contenu">
-                    LA BALLADE NORD IRLANDAISE
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/la-complainte-de-la-butte.html" class="block text-lg font-medium lien-contenu">
-                    LA COMPLAINTE DE LA BUTTE.
-                </a>
-            </li>
-             <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/la-pena-baiona.html" class="block text-lg font-medium lien-contenu">
-                    LA PENA BAIONA.
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/la-romance-de-paris.html" class="block text-lg font-medium lien-contenu">
-                    LA ROMANCE DE PARIS
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/la-sandunga.html" class="block text-lg font-medium lien-contenu">
-                    LA SANDUNGA
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/le-jazz-et-la-java.html" class="block text-lg font-medium lien-contenu">
-                    LE JAZZ ET LA JAVA
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/le-poinconneur-des-lilas.html" class="block text-lg font-medium lien-contenu">
-                    LE POINCONNEUR DES LILAS
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/les-braves.html" class="block text-lg font-medium lien-contenu">
-                    LES BRAVES
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/les-champs-elysees.html" class="block text-lg font-medium lien-contenu">
-                    LES CHAMPS ELYSEES
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/les-corons.html" class="block text-lg font-medium lien-contenu">
-                    LES CORONS
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/les-fetes-de-mauleon.html" class="block text-lg font-medium lien-contenu">
-                    LES FETES DE MAULEON
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/l-incendie-a-rio.html" class="block text-lg font-medium lien-contenu">
-                    L'INCENDIE A RIO
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/mon-amant-de-saint-jean.html" class="block text-lg font-medium lien-contenu">
-                    MON AMANT DE SAINT-JEAN
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/on-est-pas-la-pour-se-faire-engueuler.html" class="block text-lg font-medium lien-contenu">
-                    ON N'EST PAS LA POUR SE FAIRE ENGUEULER
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/siffler-sur-la-colline.html" class="block text-lg font-medium lien-contenu">
-                    SIFFLER SUR LA COLLINE 
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/sous-le-ciel-de-paris.html" class="block text-lg font-medium lien-contenu">
-                    SOUS LE CIEL DE PARIS 
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/tous-les-marins.html" class="block text-lg font-medium lien-contenu">
-                    TOUS LES MARINS 
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/un-gamin-de-paris.html" class="block text-lg font-medium lien-contenu">
-                    UN GAMIN DE PARIS
-                </a>
-            </li>
-            <li class="song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out">
-                <a href="paroles/yesterday.html" class="block text-lg font-medium lien-contenu">
-                    YESTERDAY
-                </a>
-            </li>
+            <!-- La liste des chansons sera injectée ici par JavaScript -->
         </ul>
          <p id="noResultsMessage" class="text-center text-gray-500 mt-8" style="display:none;">Aucune chanson ne correspond à votre recherche.</p>
     </main>
 
-    <footer class="text-center p-4 mt-8 bg-gray-200 text-gray-600 text-sm">
-        <p>&copy; <span id="year"></span> Coeur des Braves - Suresnes. Tous droits réservés.</p>
-    </footer>
+    <!-- Le footer sera injecté ici -->
+    <div id="footer-placeholder"></div>
 
+    <script src="js/main.js"></script>
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        const menuButton = document.getElementById('menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const iconOpen = document.getElementById('icon-open');
-        const iconClose = document.getElementById('icon-close');
-
-        if (menuButton) {
-            menuButton.addEventListener('click', () => {
-                const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
-                menuButton.setAttribute('aria-expanded', !isExpanded);
-                mobileMenu.classList.toggle('hidden');
-                iconOpen.classList.toggle('hidden');
-                iconClose.classList.toggle('hidden');
-            });
-        }
-        
-        const navElement = document.getElementById('main-nav');
-        const mainContentElement = document.getElementById('main-content');
-
-        function adjustMainPadding() {
-            if (navElement && mainContentElement) {
-                const navHeight = navElement.offsetHeight;
-                mainContentElement.style.paddingTop = navHeight + 'px';
-            }
-        }
-
-        window.addEventListener('load', adjustMainPadding);
-        window.addEventListener('resize', adjustMainPadding);
-        if (menuButton) {
-            menuButton.addEventListener('click', () => {
-                setTimeout(adjustMainPadding, 50); 
-            });
-        }
-
-        function filterSongs() {
-            let input, filter, ul, li, a, i, txtValue;
-            input = document.getElementById('searchInput');
-            filter = input.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); 
-            ul = document.getElementById("songList");
-            li = ul.getElementsByTagName('li');
-            let visibleCount = 0;
-
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("a")[0];
-                txtValue = (a.textContent || a.innerText).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                    visibleCount++;
-                } else {
-                    li[i].style.display = "none";
-                }
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            const songListElement = document.getElementById('songList');
+            const searchInputElement = document.getElementById('searchInput');
             const noResultsMessage = document.getElementById('noResultsMessage');
-            if (visibleCount === 0 && filter.length > 0) { 
-                noResultsMessage.style.display = 'block';
-            } else {
-                noResultsMessage.style.display = 'none';
+            let allSongs = {};
+
+            fetch('songs.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur réseau lors du chargement de songs.json');
+                    }
+                    return response.json();
+                })
+                .then(songsData => {
+                    allSongs = songsData;
+                    // Triez les chansons par titre avant de les afficher
+                    const sortedSongIds = Object.keys(allSongs).sort((a, b) => {
+                        return allSongs[a].title.localeCompare(allSongs[b].title);
+                    });
+                    
+                    displaySongs(sortedSongIds);
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des chansons:', error);
+                    songListElement.innerHTML = '<li class="text-center text-red-500">Impossible de charger la liste des chansons.</li>';
+                });
+
+            function displaySongs(songIds) {
+                songListElement.innerHTML = ''; // Vide la liste actuelle
+                if (songIds.length === 0) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+
+                songIds.forEach(songId => {
+                    const song = allSongs[songId];
+                    const listItem = document.createElement('li');
+                    listItem.className = 'song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out';
+                    
+                    const link = document.createElement('a');
+                    link.href = `paroles/index.html?song=${songId}`;
+                    link.className = 'block text-lg font-medium lien-contenu';
+                    link.textContent = song.title;
+                    
+                    listItem.appendChild(link);
+                    songListElement.appendChild(listItem);
+                });
             }
-        }
+
+            searchInputElement.addEventListener('keyup', function() {
+                const searchTerm = searchInputElement.value.toLowerCase().trim();
+                
+                const filteredSongIds = Object.keys(allSongs).filter(songId => {
+                    return allSongs[songId].title.toLowerCase().includes(searchTerm);
+                });
+
+                // Triez les résultats filtrés
+                const sortedFilteredIds = filteredSongIds.sort((a, b) => {
+                    return allSongs[a].title.localeCompare(allSongs[b].title);
+                });
+
+                displaySongs(sortedFilteredIds);
+            });
+        });
     </script>
 </body>
 </html>
