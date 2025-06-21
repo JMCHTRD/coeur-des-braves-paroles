@@ -21,6 +21,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Une fois le header chargé, on configure la navigation et le lien actif.
                     setupNavigation();
                     setActiveLink(basePath);
+
+                    // Ajuste le padding immédiatement, puis à nouveau quand le logo est chargé
+                    // pour s'adapter à un éventuel changement de hauteur du bandeau.
+                    adjustMainPadding(); 
+                    const logo = document.querySelector('#main-nav img');
+                    if (logo) {
+                        // Si l'image n'est pas encore chargée, on attend qu'elle le soit.
+                        if (!logo.complete) {
+                            logo.addEventListener('load', adjustMainPadding);
+                        }
+                    }
                 })
                 .catch(error => console.error('Error loading header:', error));
         }
@@ -61,9 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
         
-        // Ajustement du padding au chargement (après chargement des images/polices) et sur redimensionnement.
-        window.addEventListener('load', adjustMainPadding);
-        window.addEventListener('resize', adjustMainPadding);
+        // Les écouteurs d'événements pour 'load' et 'resize' sont gérés ailleurs.
     }
     
     function adjustMainPadding() {
@@ -110,4 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lance le chargement du header et du footer.
     initializeDynamicContent();
+
+    // L'ajustement du padding doit aussi se faire si la fenêtre est redimensionnée.
+    window.addEventListener('resize', adjustMainPadding);
 }); 
