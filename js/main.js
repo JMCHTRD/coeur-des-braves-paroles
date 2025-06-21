@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Le nom du dépôt est utilisé pour construire les chemins absolus.
-    const basePath = ''; // Plus de nom de dépôt en dur
+    const repoName = 'coeur-des-braves-paroles';
+    const basePath = `/${repoName}`;
 
     const initializeDynamicContent = () => {
-        const headerPath = `/includes/_header.html`;
-        const footerPath = `/includes/_footer.html`;
+        const headerPath = `${basePath}/includes/_header.html`;
+        const footerPath = `${basePath}/includes/_footer.html`;
         
         const headerPlaceholder = document.getElementById('header-placeholder');
         const footerPlaceholder = document.getElementById('footer-placeholder');
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     headerPlaceholder.innerHTML = data;
                     // Une fois le header chargé, on configure la navigation et le lien actif.
                     setupNavigation();
-                    setActiveLink();
+                    setActiveLink(basePath);
                 })
                 .catch(error => console.error('Error loading header:', error));
         }
@@ -74,30 +75,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function setActiveLink() {
+    function setActiveLink(basePath) {
         // Chemin de la page actuelle sur le serveur. Ex: /coeur-des-braves-paroles/chansons.html
-        const currentPath = window.location.pathname;
+        const currentPathname = window.location.pathname;
 
         const navLinks = document.querySelectorAll('#desktop-menu a, #mobile-menu a');
 
         navLinks.forEach(link => {
-            // Chemin du lien dans le menu. Ex: /chansons.html
-            const linkPath = new URL(link.href).pathname;
+            // Chemin du lien dans le menu. Ex: /coeur-des-braves-paroles/index.html
+            const linkPathname = new URL(link.href).pathname;
             
-            // On vérifie si le chemin de la page actuelle se termine par le chemin du lien.
-            // Cela fonctionne car "/coeur-des-braves-paroles/chansons.html".endsWith("/chansons.html") est vrai.
-            let isActive = currentPath.endsWith(linkPath);
+            let isActive = false;
 
-            // Cas spécial pour la page d'accueil, car /repo/ et /repo/index.html sont équivalents
-            if (linkPath.endsWith('/index.html') && (currentPath.endsWith('/') || currentPath.endsWith('/index.html'))) {
-                 const repoNameFromPath = currentPath.split('/')[1];
-                 if (currentPath === `/${repoNameFromPath}/` || currentPath === `/${repoNameFromPath}/index.html`) {
-                    isActive = true;
-                 }
-            }
-            
+            // Comparaison directe des chemins.
+            if (linkPathname === currentPathname) {
+                isActive = true;
+            // Si l'URL de la page ne se termine pas par .html (URL "propre"), on la rajoute pour comparer.
+            } else if (`${currentPathname}.html` === linkPathname) {
+                 isActive = true;
             // Cas spécial pour la page des paroles : on active le lien "Chansons"
-            if (currentPath.includes('/paroles/') && linkPath.endsWith('/chansons.html')) {
+            } else if (currentPathname.includes('/paroles/') && linkPathname.endsWith('/chansons.html')) {
                 isActive = true;
             }
             

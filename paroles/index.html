@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="song-title">Titre de la Chanson - Coeur des Braves</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" type="image/png" href="/images/logo.png">
+    <link rel="stylesheet" href="/coeur-des-braves-paroles/css/style.css">
+    <link rel="icon" type="image/png" href="/coeur-des-braves-paroles/images/logo.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
     </style>
@@ -23,9 +23,11 @@
 
     <div id="footer-placeholder"></div>
 
-    <script src="/js/main.js"></script>
+    <script src="/coeur-des-braves-paroles/js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const repoName = 'coeur-des-braves-paroles';
+
             // Fonction pour récupérer les paramètres de l'URL
             const getQueryParam = (param) => {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -37,8 +39,8 @@
             const songLyricsElement = document.getElementById('song-lyrics');
             
             if (songId) {
-                // Le chemin vers songs.json est maintenant relatif à la racine.
-                fetch(`/songs.json`)
+                // Le chemin vers songs.json est maintenant construit avec le nom du dépôt.
+                fetch(`/${repoName}/songs.json`)
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Erreur réseau lors du chargement de songs.json');
@@ -63,7 +65,7 @@
                     });
             } else {
                 songTitleElement.textContent = 'Aucune chanson sélectionnée';
-                songLyricsElement.innerHTML = `<p>Veuillez sélectionner une chanson depuis la <a href="/chansons.html">liste des chansons</a>.</p>`;
+                songLyricsElement.innerHTML = `<p>Veuillez sélectionner une chanson depuis la <a href="/${repoName}/chansons.html">liste des chansons</a>.</p>`;
             }
         });
     </script>
