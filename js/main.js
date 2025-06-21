@@ -21,17 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Une fois le header chargé, on configure la navigation et le lien actif.
                     setupNavigation();
                     setActiveLink(basePath);
-
-                    // Ajuste le padding immédiatement, puis à nouveau quand le logo est chargé
-                    // pour s'adapter à un éventuel changement de hauteur du bandeau.
-                    adjustMainPadding(); 
-                    const logo = document.querySelector('#main-nav img');
-                    if (logo) {
-                        // Si l'image n'est pas encore chargée, on attend qu'elle le soit.
-                        if (!logo.complete) {
-                            logo.addEventListener('load', adjustMainPadding);
-                        }
-                    }
                 })
                 .catch(error => console.error('Error loading header:', error));
         }
@@ -67,20 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 mobileMenu.classList.toggle('hidden');
                 if (iconOpen) iconOpen.classList.toggle('hidden');
                 if (iconClose) iconClose.classList.toggle('hidden');
-                // On recalcule le padding après l'animation du menu pour être sûr.
-                setTimeout(adjustMainPadding, 50); 
             });
-        }
-        
-        // Les écouteurs d'événements pour 'load' et 'resize' sont gérés ailleurs.
-    }
-    
-    function adjustMainPadding() {
-        const navElement = document.getElementById('main-nav');
-        const mainContentElement = document.getElementById('main-content');
-        if (navElement && mainContentElement) {
-            const navHeight = navElement.offsetHeight;
-            mainContentElement.style.paddingTop = `${navHeight}px`;
         }
     }
 
@@ -119,7 +95,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lance le chargement du header et du footer.
     initializeDynamicContent();
-
-    // L'ajustement du padding doit aussi se faire si la fenêtre est redimensionnée.
-    window.addEventListener('resize', adjustMainPadding);
 }); 

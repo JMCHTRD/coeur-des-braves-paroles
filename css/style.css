@@ -43,3 +43,16 @@
 .lien-contenu:hover {
   color: var(--couleur-liens-hover);
 }
+
+/* 
+  Correction pour le bandeau fixe.
+  On donne une hauteur fixe au bandeau de navigation et on décale le contenu principal
+  d'une marge équivalente pour éviter le chevauchement.
+*/
+#main-nav {
+  height: 90px;
+}
+
+#main-content {
+  margin-top: 90px;
+}
