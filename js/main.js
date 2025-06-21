@@ -21,6 +21,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Une fois le header chargé, on configure la navigation et le lien actif.
                     setupNavigation();
                     setActiveLink(basePath);
+                    // On s'assure que le padding est ajusté après le chargement du logo.
+                    const logo = document.querySelector('#main-nav img');
+                    if (logo && !logo.complete) {
+                        logo.addEventListener('load', adjustMainPadding);
+                    }
+                    adjustMainPadding();
                 })
                 .catch(error => console.error('Error loading header:', error));
         }
@@ -56,7 +62,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 mobileMenu.classList.toggle('hidden');
                 if (iconOpen) iconOpen.classList.toggle('hidden');
                 if (iconClose) iconClose.classList.toggle('hidden');
+                // On recalcule le padding à chaque fois que le menu est ouvert/fermé.
+                adjustMainPadding();
             });
+        }
+    }
+
+    function adjustMainPadding() {
+        const navElement = document.getElementById('main-nav');
+        const mainContentElement = document.getElementById('main-content');
+        if (navElement && mainContentElement) {
+            const navHeight = navElement.offsetHeight;
+            mainContentElement.style.paddingTop = `${navHeight}px`;
         }
     }
 
@@ -95,4 +112,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lance le chargement du header et du footer.
     initializeDynamicContent();
+    window.addEventListener('resize', adjustMainPadding);
 }); 
