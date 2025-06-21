@@ -1,35 +1,39 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const rootPath = document.documentElement.getAttribute('data-root-path') || '.';
-
-    // Détermine si nous sommes à la racine (ex: index.html) ou dans un sous-dossier (ex: paroles/)
-    // Un chemin rootPath de '.' signifie que nous sommes à la racine.
-    const pathPrefix = rootPath === '.' ? '' : rootPath + '/';
+    // Le nom du dépôt est utilisé pour construire les chemins absolus.
+    const repoName = 'coeur-des-braves-paroles';
+    const basePath = `/${repoName}`;
 
     const initializeDynamicContent = () => {
-        const headerPath = `${pathPrefix}includes/_header.html`;
-        const footerPath = `${pathPrefix}includes/_footer.html`;
+        const headerPath = `${basePath}/includes/_header.html`;
+        const footerPath = `${basePath}/includes/_footer.html`;
         
         const headerPlaceholder = document.getElementById('header-placeholder');
         const footerPlaceholder = document.getElementById('footer-placeholder');
 
         if (headerPlaceholder) {
             fetch(headerPath)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to fetch header: ${response.statusText}`);
+                    return response.text();
+                })
                 .then(data => {
                     headerPlaceholder.innerHTML = data;
-                    updateHeaderPaths(headerPlaceholder, pathPrefix);
+                    // Une fois le header chargé, on configure la navigation et le lien actif.
                     setupNavigation();
-                    setActiveLink();
+                    setActiveLink(basePath);
                 })
                 .catch(error => console.error('Error loading header:', error));
         }
 
         if (footerPlaceholder) {
             fetch(footerPath)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to fetch footer: ${response.statusText}`);
+                    return response.text();
+                })
                 .then(data => {
                     footerPlaceholder.innerHTML = data;
-                    updateFooterPaths(footerPlaceholder, pathPrefix);
+                    // Met à jour l'année dans le footer.
                     const yearSpan = footerPlaceholder.querySelector('#year');
                     if (yearSpan) {
                         yearSpan.textContent = new Date().getFullYear();
@@ -38,38 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(error => console.error('Error loading footer:', error));
         }
     };
-
-    // Attend que les polices soient chargées avant d'initialiser le contenu dynamique.
-    // C'est la correction clé pour éviter les problèmes de calcul de hauteur.
-    document.fonts.ready.then(initializeDynamicContent);
-
-    function updateHeaderPaths(container, prefix) {
-        if (!prefix) return; // Pas besoin de modifier si on est à la racine
-
-        // Met à jour les liens (<a>)
-        const links = container.querySelectorAll('a[href]');
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            // On ne modifie que les liens relatifs simples
-            if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('/')) {
-                link.setAttribute('href', `${prefix}${href}`);
-            }
-        });
-
-        // Met à jour les images (<img>)
-        const images = container.querySelectorAll('img[src]');
-        images.forEach(img => {
-            const src = img.getAttribute('src');
-            if (src && !src.startsWith('http') && !src.startsWith('/')) {
-                img.setAttribute('src', `${prefix}${src}`);
-            }
-        });
-    }
-    
-    function updateFooterPaths(container, prefix) {
-        if (!prefix) return;
-        // Pour l'instant, le footer n'a pas de lien à mettre à jour, mais la fonction est là au cas où.
-    }
 
     function setupNavigation() {
         const menuButton = document.getElementById('menu-button');
@@ -84,11 +56,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 mobileMenu.classList.toggle('hidden');
                 if (iconOpen) iconOpen.classList.toggle('hidden');
                 if (iconClose) iconClose.classList.toggle('hidden');
-                setTimeout(adjustMainPadding, 50);
+                // On recalcule le padding après l'animation du menu pour être sûr.
+                setTimeout(adjustMainPadding, 50); 
             });
         }
         
-        setTimeout(adjustMainPadding, 50);
+        // Ajustement du padding au chargement (après chargement des images/polices) et sur redimensionnement.
+        window.addEventListener('load', adjustMainPadding);
         window.addEventListener('resize', adjustMainPadding);
     }
     
@@ -97,34 +71,43 @@ document.addEventListener('DOMContentLoaded', function () {
         const mainContentElement = document.getElementById('main-content');
         if (navElement && mainContentElement) {
             const navHeight = navElement.offsetHeight;
-            mainContentElement.style.paddingTop = navHeight + 'px';
+            mainContentElement.style.paddingTop = `${navHeight}px`;
         }
     }
 
-    function setActiveLink() {
-        const currentPath = window.location.pathname.endsWith('/') 
-            ? window.location.pathname + 'index.html' 
-            : window.location.pathname;
-        
+    function setActiveLink(basePath) {
+        // Chemin de la page actuelle sur le serveur. Ex: /coeur-des-braves-paroles/chansons.html
+        const currentPathname = window.location.pathname;
+
         const navLinks = document.querySelectorAll('#desktop-menu a, #mobile-menu a');
 
         navLinks.forEach(link => {
-            const linkUrl = new URL(link.getAttribute('href'), window.location.origin);
-            const linkPath = linkUrl.pathname;
+            // Chemin du lien dans le menu. Ex: /coeur-des-braves-paroles/index.html
+            const linkPathname = new URL(link.href).pathname;
             
             let isActive = false;
 
-            if (linkPath === currentPath) {
+            // Comparaison directe des chemins.
+            if (linkPathname === currentPathname) {
                 isActive = true;
-            } else if (currentPath.includes('/paroles/') && linkPath.endsWith('/chansons.html')) {
+            // Si l'URL de la page ne se termine pas par .html (URL "propre"), on la rajoute pour comparer.
+            } else if (`${currentPathname}.html` === linkPathname) {
+                 isActive = true;
+            // Cas spécial pour la page des paroles : on active le lien "Chansons"
+            } else if (currentPathname.includes('/paroles/') && linkPathname.endsWith('/chansons.html')) {
                 isActive = true;
             }
             
             if (isActive) {
-                link.classList.add('font-semibold');
+                link.classList.add('text-green-400', 'font-bold');
+                link.classList.remove('text-white', 'hover:text-gray-300');
             } else {
-                link.classList.remove('font-semibold');
+                link.classList.remove('text-green-400', 'font-bold');
+                link.classList.add('text-white', 'hover:text-gray-300');
             }
         });
     }
+
+    // Lance le chargement du header et du footer.
+    initializeDynamicContent();
 }); 

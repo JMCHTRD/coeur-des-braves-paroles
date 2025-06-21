@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html lang="fr" data-root-path="..">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paroles - Le Coeur des Braves</title>
+    <title id="song-title">Titre de la Chanson - Coeur des Braves</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="/coeur-des-braves-paroles/css/style.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+    </style>
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -20,7 +23,8 @@
 
     <div id="footer-placeholder"></div>
 
-    <script src="../js/main.js"></script>
+    <script src="/coeur-des-braves-paroles/js/main.js"></script>
+    <script src="/coeur-des-braves-paroles/js/song-display.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const rootPath = document.documentElement.getAttribute('data-root-path') || '.';
