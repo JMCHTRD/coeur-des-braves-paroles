@@ -1,13 +1,16 @@
 {
-    "Maison de retraite 2025": [
-        "amazing-grace",
-        "bagare"
-    ],
-    "Fête de la musique 2025": [
-        "les-braves",
-        "les-champs-elysees",
-        "les-corons",
-        "les-fetes-de-mauleon",
-        "tous-les-marins"
-    ]
+    "active": "Fête de la musique 2025",
+    "lists": {
+        "Maison de retraite 2025": [
+            "amazing-grace",
+            "bagare"
+        ],
+        "Fête de la musique 2025": [
+            "les-braves",
+            "les-champs-elysees",
+            "les-corons",
+            "les-fetes-de-mauleon",
+            "tous-les-marins"
+        ]
+    }
 }
