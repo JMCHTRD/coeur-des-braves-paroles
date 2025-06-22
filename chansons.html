@@ -60,13 +60,15 @@
             function fetchAllData() {
                 const songsPromise = fetch('songs.json', { cache: 'no-cache' }).then(res => res.json());
                 const concertsPromise = fetch('concerts.json', { cache: 'no-cache' }).then(res => res.json());
-                const activeConcertName = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
 
-                return Promise.all([songsPromise, concertsPromise]).then(([songsData, concertsData]) => {
+                return Promise.all([songsPromise, concertsPromise]).then(([songsData, concertData]) => {
                     allSongs = songsData;
-                    if (activeConcertName && concertsData[activeConcertName]) {
+                    const activeConcertName = concertData.active;
+                    const concertLists = concertData.lists || {};
+
+                    if (activeConcertName && concertLists[activeConcertName]) {
                         // Mode Concert
-                        displayedSongIds = concertsData[activeConcertName];
+                        displayedSongIds = concertLists[activeConcertName];
                         pageTitleElement.textContent = `Concert: ${activeConcertName}`;
                         pageSubtitleElement.textContent = `Voici la liste des chansons pour ce concert.`;
                         searchInputElement.style.display = 'none'; // Cacher la recherche en mode concert
@@ -77,6 +79,14 @@
                         });
                     }
                     displaySongs(displayedSongIds);
+                }).catch(err => {
+                    // Si concerts.json n'existe pas ou est invalide, on affiche tout
+                    console.warn("Could not load or parse concerts.json, showing all songs.", err);
+                    return fetch('songs.json', { cache: 'no-cache' }).then(res => res.json()).then(songsData => {
+                        allSongs = songsData;
+                        displayedSongIds = Object.keys(allSongs).sort((a, b) => allSongs[a].title.localeCompare(allSongs[b].title));
+                        displaySongs(displayedSongIds);
+                    });
                 });
             }
 
@@ -118,8 +128,8 @@
                 });
 
                 // En mode normal, on trie par alphabet. En mode concert, on garde l'ordre.
-                const activeConcertName = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
-                if (!activeConcertName) {
+                const activeConcertName = localStorage.getItem('coeurDesBravesActiveConcert'); // Ce check est maintenant implicite via displayedSongIds
+                if (displayedSongIds.length === Object.keys(allSongs).length) {
                     filteredSongIds.sort((a, b) => {
                         return allSongs[a].title.localeCompare(allSongs[b].title);
                     });

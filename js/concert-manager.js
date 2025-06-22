@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ACTIVE_CONCERT_STORAGE_KEY = 'coeurDesBravesActiveConcert';
 
     let allSongs = {};
-    let concerts = {};
+    let concertData = { active: null, lists: {} };
     let currentConcertName = null;
 
     async function initialize() {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setupEventListeners();
         
         // Load first concert if available
-        if (Object.keys(concerts).length > 0) {
+        if (Object.keys(concertData.lists).length > 0) {
             concertSelector.selectedIndex = 0;
             handleConcertSelect();
         } else {
@@ -50,16 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadConcertsFromFile() {
         try {
             const response = await fetch('concerts.json', { cache: 'no-cache' });
-            if (!response.ok) { // Si le fichier n'existe pas ou qu'il y a une erreur réseau
-                concerts = {};
+            if (!response.ok) {
+                concertData = { active: null, lists: {} };
                 return;
             }
             const data = await response.json();
-            concerts = data || {};
+            // Gérer l'ancien format et le convertir
+            if (data && !data.hasOwnProperty('lists')) {
+                concertData = { active: null, lists: data };
+            } else {
+                concertData = data || { active: null, lists: {} };
+            }
         } catch (error) {
             console.error('Failed to load concerts.json:', error);
             alert('Erreur: Impossible de charger le fichier des concerts. Un fichier vide sera utilisé.');
-            concerts = {};
+            concertData = { active: null, lists: {} };
         }
     }
 
@@ -95,15 +100,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function populateConcertSelector() {
         const selectedValue = concertSelector.value;
         concertSelector.innerHTML = '';
-        const activeConcert = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
+        const activeConcert = concertData.active;
 
-        if (Object.keys(concerts).length === 0) {
+        if (Object.keys(concertData.lists).length === 0) {
             const option = new Option('Aucun concert créé', '');
             option.disabled = true;
             concertSelector.add(option);
             return;
         }
-        Object.keys(concerts)
+        Object.keys(concertData.lists)
             .sort()
             .forEach(name => {
                 const option = new Option(name, name);
@@ -113,7 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 concertSelector.add(option);
             });
         
-        concertSelector.value = selectedValue;
+        if (selectedValue) {
+            concertSelector.value = selectedValue;
+        }
     }
     
     function updateUIForNoConcert() {
@@ -126,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateUIForSelectedConcert() {
         concertTitleElement.textContent = currentConcertName;
         [renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = false);
-        const songIds = concerts[currentConcertName] || [];
+        const songIds = concertData.lists[currentConcertName] || [];
         populateAvailableSongs(songIds);
         populateConcertSongs(songIds);
     }
@@ -155,8 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         newConcertBtn.addEventListener('click', () => {
             const name = prompt('Entrez le nom du nouveau concert:');
-            if (name && !concerts[name]) {
-                concerts[name] = [];
+            if (name && !concertData.lists[name]) {
+                concertData.lists[name] = [];
                 currentConcertName = name;
                 populateConcertSelector();
                 concertSelector.value = name;
@@ -170,10 +177,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // S'assurer que le concert en cours d'édition est bien à jour avant de télécharger
             if (currentConcertName) {
                 const songIds = [...concertSongsContainer.children].map(item => item.dataset.id);
-                concerts[currentConcertName] = songIds;
+                concertData.lists[currentConcertName] = songIds;
             }
 
-            const updatedJsonString = JSON.stringify(concerts, null, 4);
+            const updatedJsonString = JSON.stringify(concertData, null, 4);
             const blob = new Blob([updatedJsonString], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -188,13 +195,18 @@ document.addEventListener('DOMContentLoaded', () => {
         renameConcertBtn.addEventListener('click', () => {
             if (!currentConcertName) return;
             const newName = prompt('Entrez le nouveau nom du concert:', currentConcertName);
-            if (newName && newName !== currentConcertName && !concerts[newName]) {
+            if (newName && newName !== currentConcertName && !concertData.lists[newName]) {
                 // Sauvegarde de l'ordre actuel avant de changer le nom
                 const songIds = [...concertSongsContainer.children].map(item => item.dataset.id);
-                concerts[currentConcertName] = songIds;
+                concertData.lists[currentConcertName] = songIds;
 
-                concerts[newName] = concerts[currentConcertName];
-                delete concerts[currentConcertName];
+                concertData.lists[newName] = concertData.lists[currentConcertName];
+                delete concertData.lists[currentConcertName];
+
+                if (concertData.active === currentConcertName) {
+                    concertData.active = newName;
+                }
+
                 currentConcertName = newName;
                 
                 populateConcertSelector();
@@ -207,19 +219,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         deleteConcertBtn.addEventListener('click', () => {
             if (!currentConcertName) return;
-            const activeConcert = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
-            if (currentConcertName === activeConcert) {
-                localStorage.removeItem(ACTIVE_CONCERT_STORAGE_KEY);
+            if (currentConcertName === concertData.active) {
+                concertData.active = null;
             }
             if (!confirm(`Êtes-vous sûr de vouloir supprimer le concert "${currentConcertName}" ?`)) {
                 return;
             }
-            delete concerts[currentConcertName];
+            delete concertData.lists[currentConcertName];
             currentConcertName = null;
             
             populateConcertSelector();
 
-            if (Object.keys(concerts).length > 0) {
+            if (Object.keys(concertData.lists).length > 0) {
                 concertSelector.selectedIndex = 0;
                 handleConcertSelect();
             } else {
@@ -237,20 +248,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         publishConcertBtn.addEventListener('click', () => {
             if (!currentConcertName) return;
-            localStorage.setItem(ACTIVE_CONCERT_STORAGE_KEY, currentConcertName);
+            concertData.active = currentConcertName;
             populateConcertSelector();
-            alert(`Le concert "${currentConcertName}" est maintenant publié sur la page "Liste des chansons".`);
+            alert(`"${currentConcertName}" est marqué comme publié. N'oubliez pas de télécharger le fichier et de le mettre à jour sur GitHub.`);
         });
 
         unpublishBtn.addEventListener('click', () => {
-            localStorage.removeItem(ACTIVE_CONCERT_STORAGE_KEY);
+            concertData.active = null;
             populateConcertSelector();
-            alert('Le mode concert est désactivé. La liste complète des chansons sera affichée.');
+            alert("Le mode concert est désactivé. N'oubliez pas de télécharger le fichier et de le mettre à jour sur GitHub.");
         });
 
         generatePageBtn.addEventListener('click', () => {
             if (!currentConcertName) return;
-            const songIds = concerts[currentConcertName] || [];
+            const songIds = concertData.lists[currentConcertName] || [];
             if (songIds.length === 0) {
                 alert('Ce concert est vide. Ajoutez des chansons avant de générer la page.');
                 return;
