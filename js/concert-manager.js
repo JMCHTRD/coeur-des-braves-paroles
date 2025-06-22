@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const concertSelector = document.getElementById('concert-selector');
     const newConcertBtn = document.getElementById('new-concert-btn');
-    const saveConcertBtn = document.getElementById('save-concert-btn');
+    const downloadConcertsBtn = document.getElementById('download-concerts-btn');
     const renameConcertBtn = document.getElementById('rename-concert-btn');
     const deleteConcertBtn = document.getElementById('delete-concert-btn');
     const songFilter = document.getElementById('song-filter');
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function initialize() {
         await loadSongs();
-        loadConcertsFromStorage();
+        await loadConcertsFromFile();
         populateConcertSelector();
         setupDragAndDrop();
         setupEventListeners();
@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             updateUIForNoConcert();
         }
+        downloadConcertsBtn.disabled = false; // Le bouton de téléchargement doit toujours être actif
     }
 
     async function loadSongs() {
@@ -46,12 +47,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function loadConcertsFromStorage() {
-        concerts = JSON.parse(localStorage.getItem(CONCERTS_STORAGE_KEY)) || {};
-    }
-
-    function saveConcertsToStorage() {
-        localStorage.setItem(CONCERTS_STORAGE_KEY, JSON.stringify(concerts));
+    async function loadConcertsFromFile() {
+        try {
+            const response = await fetch('concerts.json');
+            if (!response.ok) { // Si le fichier n'existe pas ou qu'il y a une erreur réseau
+                concerts = {};
+                return;
+            }
+            const data = await response.json();
+            concerts = data || {};
+        } catch (error) {
+            console.error('Failed to load concerts.json:', error);
+            alert('Erreur: Impossible de charger le fichier des concerts. Un fichier vide sera utilisé.');
+            concerts = {};
+        }
     }
 
     function createSongItem(id, title) {
@@ -109,14 +118,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateUIForNoConcert() {
         concertTitleElement.textContent = "Aucun concert sélectionné";
-        [saveConcertBtn, renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = true);
+        [renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = true);
         populateAvailableSongs();
         populateConcertSongs();
     }
     
     function updateUIForSelectedConcert() {
         concertTitleElement.textContent = currentConcertName;
-        [saveConcertBtn, renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = false);
+        [renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = false);
         const songIds = concerts[currentConcertName] || [];
         populateAvailableSongs(songIds);
         populateConcertSongs(songIds);
@@ -149,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (name && !concerts[name]) {
                 concerts[name] = [];
                 currentConcertName = name;
-                saveConcertsToStorage();
                 populateConcertSelector();
                 concertSelector.value = name;
                 updateUIForSelectedConcert();
@@ -158,22 +166,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        saveConcertBtn.addEventListener('click', () => {
-            if (!currentConcertName) return;
-            const songIds = [...concertSongsContainer.children].map(item => item.dataset.id);
-            concerts[currentConcertName] = songIds;
-            saveConcertsToStorage();
-            alert(`Concert "${currentConcertName}" sauvegardé !`);
+        downloadConcertsBtn.addEventListener('click', () => {
+            // S'assurer que le concert en cours d'édition est bien à jour avant de télécharger
+            if (currentConcertName) {
+                const songIds = [...concertSongsContainer.children].map(item => item.dataset.id);
+                concerts[currentConcertName] = songIds;
+            }
+
+            const updatedJsonString = JSON.stringify(concerts, null, 4);
+            const blob = new Blob([updatedJsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'concerts.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         });
-        
+
         renameConcertBtn.addEventListener('click', () => {
             if (!currentConcertName) return;
             const newName = prompt('Entrez le nouveau nom du concert:', currentConcertName);
             if (newName && newName !== currentConcertName && !concerts[newName]) {
+                // Sauvegarde de l'ordre actuel avant de changer le nom
+                const songIds = [...concertSongsContainer.children].map(item => item.dataset.id);
+                concerts[currentConcertName] = songIds;
+
                 concerts[newName] = concerts[currentConcertName];
                 delete concerts[currentConcertName];
                 currentConcertName = newName;
-                saveConcertsToStorage();
+                
                 populateConcertSelector();
                 concertSelector.value = newName;
                 concertTitleElement.textContent = newName;
@@ -193,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             delete concerts[currentConcertName];
             currentConcertName = null;
-            saveConcertsToStorage();
+            
             populateConcertSelector();
 
             if (Object.keys(concerts).length > 0) {

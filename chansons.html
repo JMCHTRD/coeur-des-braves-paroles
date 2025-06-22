@@ -59,14 +59,14 @@
 
             function fetchAllData() {
                 const songsPromise = fetch('songs.json').then(res => res.json());
-                const concerts = JSON.parse(localStorage.getItem(CONCERTS_STORAGE_KEY)) || {};
+                const concertsPromise = fetch('concerts.json').then(res => res.json());
                 const activeConcertName = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
 
-                return Promise.all([songsPromise]).then(([songsData]) => {
+                return Promise.all([songsPromise, concertsPromise]).then(([songsData, concertsData]) => {
                     allSongs = songsData;
-                    if (activeConcertName && concerts[activeConcertName]) {
+                    if (activeConcertName && concertsData[activeConcertName]) {
                         // Mode Concert
-                        displayedSongIds = concerts[activeConcertName];
+                        displayedSongIds = concertsData[activeConcertName];
                         pageTitleElement.textContent = `Concert: ${activeConcertName}`;
                         pageSubtitleElement.textContent = `Voici la liste des chansons pour ce concert.`;
                         searchInputElement.style.display = 'none'; // Cacher la recherche en mode concert
