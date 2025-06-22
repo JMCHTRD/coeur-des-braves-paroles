@@ -58,8 +58,8 @@
             let displayedSongIds = [];
 
             function fetchAllData() {
-                const songsPromise = fetch('songs.json').then(res => res.json());
-                const concertsPromise = fetch('concerts.json').then(res => res.json());
+                const songsPromise = fetch('songs.json', { cache: 'no-cache' }).then(res => res.json());
+                const concertsPromise = fetch('concerts.json', { cache: 'no-cache' }).then(res => res.json());
                 const activeConcertName = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
 
                 return Promise.all([songsPromise, concertsPromise]).then(([songsData, concertsData]) => {

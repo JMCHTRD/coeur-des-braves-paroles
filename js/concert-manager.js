@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadSongs() {
         try {
-            const response = await fetch('songs.json');
+            const response = await fetch('songs.json', { cache: 'no-cache' });
             if (!response.ok) throw new Error('Network response was not ok.');
             allSongs = await response.json();
         } catch (error) {
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadConcertsFromFile() {
         try {
-            const response = await fetch('concerts.json');
+            const response = await fetch('concerts.json', { cache: 'no-cache' });
             if (!response.ok) { // Si le fichier n'existe pas ou qu'il y a une erreur réseau
                 concerts = {};
                 return;

@@ -43,7 +43,7 @@
             
             if (songId) {
                 // Le chemin vers songs.json est maintenant construit avec le nom du dépôt.
-                fetch(`/${repoName}/songs.json`)
+                fetch(`/${repoName}/songs.json`, { cache: 'no-cache' })
                     .then(response => {
                         if (!response.ok) {
                             throw new Error('Erreur réseau lors du chargement de songs.json');

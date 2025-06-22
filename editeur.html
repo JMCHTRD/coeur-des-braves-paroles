@@ -111,7 +111,7 @@
             let currentSongId = null;
 
             // --- 1. Charger les chansons ---
-            fetch('songs.json')
+            fetch('songs.json', { cache: 'no-cache' })
                 .then(response => response.json())
                 .then(data => {
                     songsData = data;
