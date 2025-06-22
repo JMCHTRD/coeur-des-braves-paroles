@@ -113,4 +113,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Lance le chargement du header et du footer.
     initializeDynamicContent();
     window.addEventListener('resize', adjustMainPadding);
+    // Assure un dernier ajustement après le chargement complet de la page (polices, images, etc.)
+    window.addEventListener('load', adjustMainPadding);
 }); 
