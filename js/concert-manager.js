@@ -9,8 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const concertSongsContainer = document.getElementById('concert-songs');
     const concertTitleElement = document.getElementById('concert-title');
     const generatePageBtn = document.getElementById('generate-page-btn');
+    const publishConcertBtn = document.getElementById('publish-concert-btn');
+    const unpublishBtn = document.getElementById('unpublish-btn');
 
-    const STORAGE_KEY = 'coeurDesBravesConcerts';
+    const CONCERTS_STORAGE_KEY = 'coeurDesBravesConcerts';
+    const ACTIVE_CONCERT_STORAGE_KEY = 'coeurDesBravesActiveConcert';
+
     let allSongs = {};
     let concerts = {};
     let currentConcertName = null;
@@ -38,16 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
             allSongs = await response.json();
         } catch (error) {
             console.error('Failed to load songs.json:', error);
-            alert('Erreur: Impossible de charger le fichier songs.json. Assurez-vous qu\'il est accessible.');
+            alert("Erreur: Impossible de charger le fichier songs.json. Assurez-vous qu'il est accessible.");
         }
     }
 
     function loadConcertsFromStorage() {
-        concerts = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        concerts = JSON.parse(localStorage.getItem(CONCERTS_STORAGE_KEY)) || {};
     }
 
     function saveConcertsToStorage() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(concerts));
+        localStorage.setItem(CONCERTS_STORAGE_KEY, JSON.stringify(concerts));
     }
 
     function createSongItem(id, title) {
@@ -80,7 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function populateConcertSelector() {
+        const selectedValue = concertSelector.value;
         concertSelector.innerHTML = '';
+        const activeConcert = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
+
         if (Object.keys(concerts).length === 0) {
             const option = new Option('Aucun concert créé', '');
             option.disabled = true;
@@ -89,19 +96,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         Object.keys(concerts)
             .sort()
-            .forEach(name => concertSelector.add(new Option(name, name)));
+            .forEach(name => {
+                const option = new Option(name, name);
+                if (name === activeConcert) {
+                    option.textContent = `${name} (Publié)`;
+                }
+                concertSelector.add(option);
+            });
+        
+        concertSelector.value = selectedValue;
     }
     
     function updateUIForNoConcert() {
         concertTitleElement.textContent = "Aucun concert sélectionné";
-        [saveConcertBtn, renameConcertBtn, deleteConcertBtn, generatePageBtn].forEach(btn => btn.disabled = true);
+        [saveConcertBtn, renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = true);
         populateAvailableSongs();
         populateConcertSongs();
     }
     
     function updateUIForSelectedConcert() {
         concertTitleElement.textContent = currentConcertName;
-        [saveConcertBtn, renameConcertBtn, deleteConcertBtn, generatePageBtn].forEach(btn => btn.disabled = false);
+        [saveConcertBtn, renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = false);
         const songIds = concerts[currentConcertName] || [];
         populateAvailableSongs(songIds);
         populateConcertSongs(songIds);
@@ -168,7 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         deleteConcertBtn.addEventListener('click', () => {
-            if (!currentConcertName || !confirm(`Êtes-vous sûr de vouloir supprimer le concert "${currentConcertName}" ?`)) {
+            if (!currentConcertName) return;
+            const activeConcert = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
+            if (currentConcertName === activeConcert) {
+                localStorage.removeItem(ACTIVE_CONCERT_STORAGE_KEY);
+            }
+            if (!confirm(`Êtes-vous sûr de vouloir supprimer le concert "${currentConcertName}" ?`)) {
                 return;
             }
             delete concerts[currentConcertName];
@@ -190,6 +210,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const songTitle = item.textContent.toLowerCase();
                 item.style.display = songTitle.includes(filterText) ? '' : 'none';
             });
+        });
+
+        publishConcertBtn.addEventListener('click', () => {
+            if (!currentConcertName) return;
+            localStorage.setItem(ACTIVE_CONCERT_STORAGE_KEY, currentConcertName);
+            populateConcertSelector();
+            alert(`Le concert "${currentConcertName}" est maintenant publié sur la page "Liste des chansons".`);
+        });
+
+        unpublishBtn.addEventListener('click', () => {
+            localStorage.removeItem(ACTIVE_CONCERT_STORAGE_KEY);
+            populateConcertSelector();
+            alert('Le mode concert est désactivé. La liste complète des chansons sera affichée.');
         });
 
         generatePageBtn.addEventListener('click', () => {

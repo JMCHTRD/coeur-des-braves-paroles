@@ -49,32 +49,45 @@
             const songListElement = document.getElementById('songList');
             const searchInputElement = document.getElementById('searchInput');
             const noResultsMessage = document.getElementById('noResultsMessage');
+            const pageTitleElement = document.querySelector('.titre-page');
+            const pageSubtitleElement = pageTitleElement.nextElementSibling;
+            
+            const CONCERTS_STORAGE_KEY = 'coeurDesBravesConcerts';
+            const ACTIVE_CONCERT_STORAGE_KEY = 'coeurDesBravesActiveConcert';
             let allSongs = {};
+            let displayedSongIds = [];
 
-            fetch('songs.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erreur réseau lors du chargement de songs.json');
-                    }
-                    return response.json();
-                })
-                .then(songsData => {
+            function fetchAllData() {
+                const songsPromise = fetch('songs.json').then(res => res.json());
+                const concerts = JSON.parse(localStorage.getItem(CONCERTS_STORAGE_KEY)) || {};
+                const activeConcertName = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
+
+                return Promise.all([songsPromise]).then(([songsData]) => {
                     allSongs = songsData;
-                    // Triez les chansons par titre avant de les afficher
-                    const sortedSongIds = Object.keys(allSongs).sort((a, b) => {
-                        return allSongs[a].title.localeCompare(allSongs[b].title);
-                    });
-                    
-                    displaySongs(sortedSongIds);
-                })
-                .catch(error => {
-                    console.error('Erreur lors du chargement des chansons:', error);
-                    songListElement.innerHTML = '<li class="text-center text-red-500">Impossible de charger la liste des chansons.</li>';
+                    if (activeConcertName && concerts[activeConcertName]) {
+                        // Mode Concert
+                        displayedSongIds = concerts[activeConcertName];
+                        pageTitleElement.textContent = `Concert: ${activeConcertName}`;
+                        pageSubtitleElement.textContent = `Voici la liste des chansons pour ce concert.`;
+                        searchInputElement.style.display = 'none'; // Cacher la recherche en mode concert
+                    } else {
+                        // Mode normal
+                        displayedSongIds = Object.keys(allSongs).sort((a, b) => {
+                            return allSongs[a].title.localeCompare(allSongs[b].title);
+                        });
+                    }
+                    displaySongs(displayedSongIds);
                 });
+            }
+
+            fetchAllData().catch(error => {
+                console.error('Erreur lors du chargement des chansons:', error);
+                songListElement.innerHTML = '<li class="text-center text-red-500">Impossible de charger la liste des chansons.</li>';
+            });
 
             function displaySongs(songIds) {
                 songListElement.innerHTML = ''; // Vide la liste actuelle
-                if (songIds.length === 0) {
+                if (songIds.length === 0 && document.activeElement !== searchInputElement) {
                     noResultsMessage.style.display = 'block';
                 } else {
                     noResultsMessage.style.display = 'none';
@@ -82,6 +95,8 @@
 
                 songIds.forEach(songId => {
                     const song = allSongs[songId];
+                    if (!song) return; // Sécurité si un ID de chanson est invalide
+                    
                     const listItem = document.createElement('li');
                     listItem.className = 'song-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out';
                     
@@ -98,16 +113,19 @@
             searchInputElement.addEventListener('keyup', function() {
                 const searchTerm = searchInputElement.value.toLowerCase().trim();
                 
-                const filteredSongIds = Object.keys(allSongs).filter(songId => {
+                const filteredSongIds = displayedSongIds.filter(songId => {
                     return allSongs[songId].title.toLowerCase().includes(searchTerm);
                 });
 
-                // Triez les résultats filtrés
-                const sortedFilteredIds = filteredSongIds.sort((a, b) => {
-                    return allSongs[a].title.localeCompare(allSongs[b].title);
-                });
-
-                displaySongs(sortedFilteredIds);
+                // En mode normal, on trie par alphabet. En mode concert, on garde l'ordre.
+                const activeConcertName = localStorage.getItem(ACTIVE_CONCERT_STORAGE_KEY);
+                if (!activeConcertName) {
+                    filteredSongIds.sort((a, b) => {
+                        return allSongs[a].title.localeCompare(allSongs[b].title);
+                    });
+                }
+                
+                displaySongs(filteredSongIds);
             });
         });
     </script>
