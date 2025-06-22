@@ -55,9 +55,16 @@
                     <select id="concert-selector" class="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700"></select>
                 </div>
                 <button id="new-concert-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Nouveau</button>
-                <button id="download-concerts-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Télécharger le fichier</button>
                 <button id="rename-concert-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Renommer</button>
                 <button id="delete-concert-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Supprimer</button>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex flex-wrap items-center gap-4">
+                 <button id="publish-and-download-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                    Publier le concert sélectionné & Télécharger
+                </button>
+                <button id="unpublish-and-download-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                    Retirer la publication & Télécharger
+                </button>
             </div>
         </div>
 
@@ -80,23 +87,15 @@
 
         <!-- Section Action -->
         <div class="max-w-5xl mx-auto text-center mt-8">
-            <div class="flex flex-wrap justify-center items-center gap-4">
-                <button id="generate-page-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
-                    Générer la Page du Concert
-                </button>
-                <button id="publish-concert-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
-                    Publier ce concert
-                </button>
-            </div>
-            <div class="mt-4">
-                <button id="unpublish-btn" class="text-sm text-gray-600 dark:text-gray-400 hover:underline">Afficher la liste complète sur le site (désactiver le mode concert)</button>
-            </div>
+            <button id="generate-page-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
+                Générer la Page du Concert
+            </button>
         </div>
 
         <div class="max-w-5xl mx-auto mt-8 p-4 bg-gray-200 dark:bg-gray-700 rounded-lg border border-gray-300 dark:border-gray-600">
-            <h3 class="font-bold text-lg mb-2">Aide-mémoire : Mettre à jour les concerts</h3>
+            <h3 class="font-bold text-lg mb-2">Aide-mémoire : Mettre à jour le site</h3>
             <ol class="list-decimal list-inside space-y-2 text-sm text-gray-800 dark:text-gray-200">
-                <li>Après avoir modifié vos concerts, cliquez sur le bouton <strong>"Télécharger le fichier"</strong> ci-dessus.</li>
+                <li>Après avoir modifié vos concerts, cliquez sur <strong>"Publier..."</strong> ou <strong>"Retirer..."</strong> pour télécharger le fichier <code>concerts.json</code>.</li>
                 <li>Dans le dossier de votre projet (<code>coeur-des-braves-site</code>), remplacez l'ancien <code>concerts.json</code> par le nouveau.</li>
                 <li>Envoyez cette modification sur GitHub. Les changements seront pris en compte sur le site.</li>
             </ol>

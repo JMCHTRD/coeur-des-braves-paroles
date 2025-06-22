@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const concertSelector = document.getElementById('concert-selector');
     const newConcertBtn = document.getElementById('new-concert-btn');
-    const downloadConcertsBtn = document.getElementById('download-concerts-btn');
     const renameConcertBtn = document.getElementById('rename-concert-btn');
     const deleteConcertBtn = document.getElementById('delete-concert-btn');
     const songFilter = document.getElementById('song-filter');
@@ -9,11 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const concertSongsContainer = document.getElementById('concert-songs');
     const concertTitleElement = document.getElementById('concert-title');
     const generatePageBtn = document.getElementById('generate-page-btn');
-    const publishConcertBtn = document.getElementById('publish-concert-btn');
-    const unpublishBtn = document.getElementById('unpublish-btn');
-
-    const CONCERTS_STORAGE_KEY = 'coeurDesBravesConcerts';
-    const ACTIVE_CONCERT_STORAGE_KEY = 'coeurDesBravesActiveConcert';
+    const publishAndDownloadBtn = document.getElementById('publish-and-download-btn');
+    const unpublishAndDownloadBtn = document.getElementById('unpublish-and-download-btn');
 
     let allSongs = {};
     let concertData = { active: null, lists: {} };
@@ -26,14 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         setupDragAndDrop();
         setupEventListeners();
         
-        // Load first concert if available
         if (Object.keys(concertData.lists).length > 0) {
             concertSelector.selectedIndex = 0;
             handleConcertSelect();
         } else {
             updateUIForNoConcert();
         }
-        downloadConcertsBtn.disabled = false; // Le bouton de téléchargement doit toujours être actif
     }
 
     async function loadSongs() {
@@ -125,14 +119,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateUIForNoConcert() {
         concertTitleElement.textContent = "Aucun concert sélectionné";
-        [renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = true);
+        [renameConcertBtn, deleteConcertBtn, generatePageBtn, publishAndDownloadBtn].forEach(btn => btn.disabled = true);
+        unpublishAndDownloadBtn.disabled = !concertData.active;
         populateAvailableSongs();
         populateConcertSongs();
     }
     
     function updateUIForSelectedConcert() {
         concertTitleElement.textContent = currentConcertName;
-        [renameConcertBtn, deleteConcertBtn, generatePageBtn, publishConcertBtn].forEach(btn => btn.disabled = false);
+        [renameConcertBtn, deleteConcertBtn, generatePageBtn, publishAndDownloadBtn].forEach(btn => btn.disabled = false);
+        unpublishAndDownloadBtn.disabled = !concertData.active;
         const songIds = concertData.lists[currentConcertName] || [];
         populateAvailableSongs(songIds);
         populateConcertSongs(songIds);
@@ -171,25 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (name) {
                 alert('Un concert avec ce nom existe déjà.');
             }
-        });
-
-        downloadConcertsBtn.addEventListener('click', () => {
-            // S'assurer que le concert en cours d'édition est bien à jour avant de télécharger
-            if (currentConcertName) {
-                const songIds = [...concertSongsContainer.children].map(item => item.dataset.id);
-                concertData.lists[currentConcertName] = songIds;
-            }
-
-            const updatedJsonString = JSON.stringify(concertData, null, 4);
-            const blob = new Blob([updatedJsonString], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'concerts.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
         });
 
         renameConcertBtn.addEventListener('click', () => {
@@ -246,17 +223,38 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        publishConcertBtn.addEventListener('click', () => {
+        function downloadConcertsFile() {
+            // S'assurer que le concert en cours d'édition est bien à jour avant de télécharger
+            if (currentConcertName) {
+                const songIds = [...concertSongsContainer.children].map(item => item.dataset.id);
+                concertData.lists[currentConcertName] = songIds;
+            }
+
+            const updatedJsonString = JSON.stringify(concertData, null, 4);
+            const blob = new Blob([updatedJsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'concerts.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        publishAndDownloadBtn.addEventListener('click', () => {
             if (!currentConcertName) return;
             concertData.active = currentConcertName;
             populateConcertSelector();
-            alert(`"${currentConcertName}" est marqué comme publié. N'oubliez pas de télécharger le fichier et de le mettre à jour sur GitHub.`);
+            downloadConcertsFile();
+            alert(`Le concert "${currentConcertName}" a été publié et le fichier concerts.json a été téléchargé.`);
         });
 
-        unpublishBtn.addEventListener('click', () => {
+        unpublishAndDownloadBtn.addEventListener('click', () => {
             concertData.active = null;
             populateConcertSelector();
-            alert("Le mode concert est désactivé. N'oubliez pas de télécharger le fichier et de le mettre à jour sur GitHub.");
+            downloadConcertsFile();
+            alert(`La publication a été retirée et le fichier concerts.json a été téléchargé.`);
         });
 
         generatePageBtn.addEventListener('click', () => {
