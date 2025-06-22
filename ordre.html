@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordre des Chansons - Coeur des Braves</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        .song-item {
+            cursor: grab;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.375rem;
+            border: 1px solid #d1d5db; /* gray-300 */
+        }
+        .dark .song-item {
+            border-color: #4b5563; /* gray-600 */
+        }
+        .song-item:hover {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        .dark .song-item:hover {
+            background-color: #374151; /* gray-700 */
+        }
+        .song-list-container {
+            min-height: 300px;
+            background-color: #f9fafb; /* gray-50 */
+            border: 2px dashed #d1d5db; /* gray-300 */
+        }
+        .dark .song-list-container {
+            background-color: #1f2937; /* gray-800 */
+            border-color: #4b5563; /* gray-600 */
+        }
+        .song-item.sortable-ghost {
+            opacity: 0.4;
+            background: #60a5fa; /* blue-400 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div id="header-placeholder"></div>
+
+    <main class="main-content container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-center">Gestionnaire de Concerts</h1>
+
+        <!-- Section de gestion des concerts -->
+        <div class="max-w-5xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-semibold mb-4">Mes Concerts</h2>
+            <div class="flex flex-wrap items-end gap-4">
+                <div class="flex-grow">
+                    <label for="concert-selector" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Sélectionner un concert</label>
+                    <select id="concert-selector" class="mt-1 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700"></select>
+                </div>
+                <button id="new-concert-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Nouveau</button>
+                <button id="save-concert-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Sauvegarder</button>
+                <button id="rename-concert-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Renommer</button>
+                <button id="delete-concert-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Supprimer</button>
+            </div>
+        </div>
+
+        <!-- Section de l'éditeur -->
+        <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+            <!-- Colonne de gauche: Chansons disponibles -->
+            <div>
+                <h2 class="text-xl font-semibold mb-4">Chansons Disponibles</h2>
+                <input type="text" id="song-filter" placeholder="Filtrer les chansons..." class="w-full p-2 mb-4 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
+                <div id="available-songs" class="p-4 rounded-lg song-list-container"></div>
+            </div>
+
+            <!-- Colonne de droite: Ordre du concert -->
+            <div>
+                <h2 class="text-xl font-semibold mb-4">Ordre du Concert</h2>
+                <p id="concert-title" class="mb-4 font-bold text-lg text-center"></p>
+                <div id="concert-songs" class="p-4 rounded-lg song-list-container"></div>
+            </div>
+        </div>
+
+        <!-- Section Action -->
+        <div class="max-w-5xl mx-auto text-center mt-8">
+            <button id="generate-page-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
+                Générer la Page du Concert
+            </button>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="js/concert-manager.js"></script>
+</body>
+</html> 
