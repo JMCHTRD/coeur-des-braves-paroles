@@ -15,8 +15,10 @@
     <div id="header-placeholder"></div>
 
     <main class="main-content mx-auto" id="main-content">
-        <h1 id="song-title" class="text-3xl font-bold mb-4 text-center">Chargement...</h1>
-        <div id="song-lyrics" class="prose dark:prose-invert max-w-none">
+        <h1 id="song-title-container" class="text-3xl font-bold mb-4 text-center">
+            <span id="song-title">Chargement...</span>
+        </h1>
+        <div id="song-lyrics" class="prose dark:prose-invert max-w-none text-center">
             <!-- Les paroles seront injectées ici par JavaScript -->
         </div>
     </main>
@@ -37,6 +39,7 @@
             const songId = getQueryParam('song');
             const songTitleElement = document.getElementById('song-title');
             const songLyricsElement = document.getElementById('song-lyrics');
+            const pageTitleElement = document.querySelector('title');
             
             if (songId) {
                 // Le chemin vers songs.json est maintenant construit avec le nom du dépôt.
@@ -51,7 +54,7 @@
                         const song = songsData[songId];
                         if (song) {
                             songTitleElement.textContent = song.title;
-                            document.title = song.title + " - Le Coeur des Braves"; // Mettre à jour le titre de l'onglet
+                            pageTitleElement.textContent = song.title + " - Le Coeur des Braves"; // Mettre à jour le titre de l'onglet
                             songLyricsElement.innerHTML = song.lyrics;
                         } else {
                             songTitleElement.textContent = 'Chanson non trouvée';
