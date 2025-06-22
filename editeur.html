@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditeur de Chansons - Coeur des Braves</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        
+        #editor-container .ql-container {
+            height: 350px;
+            font-size: 1rem;
+        }
+        .dark #editor-container .ql-toolbar {
+            border-color: #4b5563;
+        }
+        .dark #editor-container .ql-container {
+            border-color: #4b5563;
+        }
+        .dark .ql-editor {
+             background-color: #374151;
+             color: #f3f4f6;
+        }
+        .dark .ql-toolbar .ql-stroke { stroke: #d1d5db; }
+        .dark .ql-toolbar .ql-fill { fill: #d1d5db; }
+        .dark .ql-toolbar .ql-picker-label { color: #d1d5db; }
+        .dark .ql-editor.ql-blank::before { color: #9ca3af; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div id="header-placeholder"></div>
+
+    <main class="main-content container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-center">Éditeur de Chansons</h1>
+
+        <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
+            
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div class="flex-grow">
+                    <label for="song-selector" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Choisir une chanson existante</label>
+                    <select id="song-selector" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700">
+                        <option value="">-- Sélectionnez une chanson --</option>
+                    </select>
+                </div>
+                <div class="pt-6">
+                     <button id="new-song-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                        Nouvelle Chanson
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <label for="editor-title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Titre de la chanson</label>
+                    <input type="text" id="editor-title" class="mt-1 block w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700" placeholder="Entrez le titre ici">
+                </div>
+                <div>
+                    <label for="editor-lyrics" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Paroles de la chanson</label>
+                    <div id="editor-container" class="mt-1">
+                        <div id="editor-lyrics"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <button id="save-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-lg">
+                    Générer et Télécharger songs.json
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/main.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const songSelector = document.getElementById('song-selector');
+            const newSongBtn = document.getElementById('new-song-btn');
+            const saveBtn = document.getElementById('save-btn');
+            const titleInput = document.getElementById('editor-title');
+
+            const toolbarOptions = [
+                ['bold', 'italic', 'underline'],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['clean']
+            ];
+            const quill = new Quill('#editor-lyrics', {
+                modules: { toolbar: toolbarOptions },
+                theme: 'snow',
+                placeholder: 'Entrez les paroles ici...'
+            });
+
+            let songsData = {};
+            let currentSongId = null;
+
+            // --- 1. Charger les chansons ---
+            fetch('songs.json')
+                .then(response => response.json())
+                .then(data => {
+                    songsData = data;
+                    Object.keys(songsData).sort((a, b) => songsData[a].title.localeCompare(songsData[b].title)).forEach(id => {
+                        const option = document.createElement('option');
+                        option.value = id;
+                        option.textContent = songsData[id].title;
+                        songSelector.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error("Erreur de chargement de songs.json:", error);
+                    alert("Impossible de charger le fichier des chansons. Assurez-vous que songs.json est présent à la racine du site.");
+                });
+
+            // --- 2. Gérer la sélection et la création ---
+            songSelector.addEventListener('change', () => {
+                currentSongId = songSelector.value;
+                if (currentSongId) {
+                    const song = songsData[currentSongId];
+                    titleInput.value = song.title;
+                    quill.root.innerHTML = song.lyrics;
+                } else {
+                    clearEditor();
+                }
+            });
+
+            newSongBtn.addEventListener('click', () => {
+                songSelector.value = '';
+                clearEditor();
+            });
+
+            function clearEditor() {
+                currentSongId = null;
+                titleInput.value = '';
+                quill.root.innerHTML = '';
+                titleInput.focus();
+            }
+            
+            // --- 3. Générer l'ID pour une nouvelle chanson ---
+            function generateSongId(title) {
+                return title.toLowerCase()
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // Enlever les accents
+                    .replace(/[^a-z0-9\s-]/g, '') // Enlever les caractères non alphanumériques
+                    .trim()
+                    .replace(/\s+/g, '-') // Remplacer les espaces par des tirets
+                    .replace(/-+/g, '-'); // Remplacer les tirets multiples par un seul
+            }
+
+            // --- 4. Gérer la sauvegarde ---
+            saveBtn.addEventListener('click', () => {
+                const title = titleInput.value.trim();
+                const lyrics = quill.root.innerHTML.trim();
+
+                if (!title) {
+                    alert('Le titre ne peut pas être vide.');
+                    return;
+                }
+
+                let songIdToSave = currentSongId;
+                if (!songIdToSave) { // C'est une nouvelle chanson
+                    songIdToSave = generateSongId(title);
+                    if (songsData[songIdToSave]) {
+                        alert("Une chanson avec un titre similaire existe déjà, ce qui crée un conflit d'ID. Veuillez modifier légèrement le titre.");
+                        return;
+                    }
+                }
+                
+                // Nettoyer le HTML de Quill qui peut laisser des <p><br></p> pour une ligne vide
+                const cleanedLyrics = lyrics === '<p><br></p>' ? '' : lyrics;
+
+                songsData[songIdToSave] = { title, lyrics: cleanedLyrics };
+
+                // Créer le blob et déclencher le téléchargement
+                const updatedJsonString = JSON.stringify(songsData, null, 4);
+                const blob = new Blob([updatedJsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'songs.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert("Le fichier songs.json a été généré ! Remplacez l'ancien fichier par celui-ci dans votre projet.");
+                // Optionnel: recharger la liste pour inclure la nouvelle chanson
+                location.reload(); 
+            });
+        });
+    </script>
+</body>
+</html> 
