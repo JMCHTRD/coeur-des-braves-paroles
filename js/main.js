@@ -18,11 +18,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(data => {
                     headerPlaceholder.innerHTML = data;
-                    // Une fois le header chargé, on configure la navigation et le lien actif.
                     setupNavigation();
                     setActiveLink(basePath);
-                    // On ajuste le padding une première fois. Il sera réajusté si nécessaire.
-                    adjustMainPadding();
+                    
+                    const navElement = document.getElementById('main-nav');
+                    if (navElement) {
+                        // La solution robuste et moderne : observer les changements de taille du bandeau.
+                        // Cela résout les problèmes de timing avec le chargement des polices, des images, etc.
+                        if (window.ResizeObserver) {
+                            const observer = new ResizeObserver(() => {
+                                // requestAnimationFrame évite des erreurs de "boucle" et assure une mise à jour fluide.
+                                window.requestAnimationFrame(() => {
+                                    adjustMainPadding();
+                                });
+                            });
+                            observer.observe(navElement);
+                        } else {
+                            // Fallback pour les navigateurs plus anciens
+                            window.addEventListener('resize', adjustMainPadding);
+                            window.addEventListener('load', adjustMainPadding);
+                            adjustMainPadding(); // Appel initial
+                        }
+                    }
                 })
                 .catch(error => console.error('Error loading header:', error));
         }
@@ -58,8 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 mobileMenu.classList.toggle('hidden');
                 if (iconOpen) iconOpen.classList.toggle('hidden');
                 if (iconClose) iconClose.classList.toggle('hidden');
-                // On recalcule le padding à chaque fois que le menu est ouvert/fermé.
-                adjustMainPadding();
+                // Le ResizeObserver gère automatiquement le padding, pas besoin d'appel manuel ici.
             });
         }
     }
@@ -108,8 +124,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lance le chargement du header et du footer.
     initializeDynamicContent();
-    // On ajoute des écouteurs pour recalculer le padding lors du redimensionnement
-    // et après le chargement complet de la page (images, polices), ce qui est plus robuste.
-    window.addEventListener('resize', adjustMainPadding);
-    window.addEventListener('load', adjustMainPadding);
 }); 
