@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concerts - Coeur des Braves - Suresnes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/coeur-des-braves-paroles/css/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .concert-item:hover { 
+            transform: translateY(-2px) scale(1.01); 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1); 
+            background-color: #f0f9ff; /* light blue hover */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Le header sera injecté ici -->
+    <div id="header-placeholder"></div>
+
+    <main id="main-content" class="container mx-auto p-4 md:p-6">
+        <header class="text-center mb-8">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-4 titre-page">Nos Concerts</h2>
+            <p class="text-lg text-gray-600">Sélectionnez un concert pour voir la liste des chansons associées.</p>
+        </header>
+
+        <ul id="concertList" class="space-y-3 md:space-y-4">
+            <!-- La liste des concerts sera injectée ici par JavaScript -->
+        </ul>
+        <p id="noConcertsMessage" class="text-center text-gray-500 mt-8" style="display:none;">Aucun concert n'est actuellement programmé.</p>
+    </main>
+
+    <!-- Le footer sera injecté ici -->
+    <div id="footer-placeholder"></div>
+
+    <script src="/coeur-des-braves-paroles/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const concertListElement = document.getElementById('concertList');
+            const noConcertsMessage = document.getElementById('noConcertsMessage');
+
+            fetch('concerts.json', { cache: 'no-cache' })
+                .then(response => response.json())
+                .then(data => {
+                    const concertLists = data.lists || {};
+                    const concertNames = Object.keys(concertLists);
+
+                    if (concertNames.length === 0) {
+                        noConcertsMessage.style.display = 'block';
+                        return;
+                    }
+
+                    // Ajout d'une option pour voir toutes les chansons
+                    const allSongsItem = createConcertItem('Toutes les chansons', 'all');
+                    concertListElement.appendChild(allSongsItem);
+
+
+                    concertNames.sort().forEach(concertName => {
+                        const listItem = createConcertItem(concertName, concertName);
+                        concertListElement.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erreur lors du chargement des concerts:', error);
+                    noConcertsMessage.textContent = 'Erreur lors du chargement de la liste des concerts.';
+                    noConcertsMessage.style.display = 'block';
+                });
+
+            function createConcertItem(concertName, concertId) {
+                const listItem = document.createElement('li');
+                listItem.className = 'concert-item bg-white p-4 rounded-lg shadow-md transition-all duration-200 ease-in-out';
+                
+                const link = document.createElement('a');
+                link.href = 'chansons.html'; // Redirige vers la page des chansons
+                link.className = 'block text-lg font-medium lien-contenu';
+                link.textContent = concertName;
+                link.addEventListener('click', (e) => {
+                    // Pas besoin de e.preventDefault() car on veut naviguer
+                    if (concertId === 'all') {
+                        sessionStorage.removeItem('selectedConcert');
+                    } else {
+                        sessionStorage.setItem('selectedConcert', concertId);
+                    }
+                });
+                
+                listItem.appendChild(link);
+                return listItem;
+            }
+        });
+    </script>
+</body>
+</html> 

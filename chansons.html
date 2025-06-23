@@ -60,21 +60,25 @@
                 const songsPromise = fetch('songs.json', { cache: 'no-cache' }).then(res => res.json());
                 const concertsPromise = fetch('concerts.json', { cache: 'no-cache' }).then(res => res.json()).catch(() => ({})); // Gère le cas où le fichier n'existe pas
     
-                return Promise.all([songsPromise, concertsPromise]).then(([songsData, concertData]) => {
+                Promise.all([songsPromise, concertsPromise]).then(([songsData, concertData]) => {
                     allSongs = songsData;
-                    const activeConcertName = concertData ? concertData.active : null;
+                    const selectedConcertName = sessionStorage.getItem('selectedConcert');
                     const concertLists = concertData ? concertData.lists || {} : {};
     
-                    if (activeConcertName && concertLists[activeConcertName]) {
-                        // Mode Concert
+                    if (selectedConcertName && concertLists[selectedConcertName]) {
+                        // Mode Concert via session
                         isInConcertMode = true;
-                        displayedSongIds = concertLists[activeConcertName];
-                        pageTitleElement.textContent = `Concert: ${activeConcertName}`;
-                        pageSubtitleElement.textContent = `Voici la liste des chansons pour ce concert.`;
+                        displayedSongIds = concertLists[selectedConcertName];
+                        pageTitleElement.textContent = `Concert: ${selectedConcertName}`;
+                        pageSubtitleElement.innerHTML = `Voici la liste des chansons pour ce concert. <a href="concerts.html" class="text-blue-500 hover:underline">Changer de concert</a>`;
                         searchInputElement.style.display = 'none';
                     } else {
                         // Mode normal
+                        sessionStorage.removeItem('selectedConcert'); // Nettoyer au cas où
                         isInConcertMode = false;
+                         pageTitleElement.textContent = `Notre Répertoire`;
+                        pageSubtitleElement.textContent = `Cliquez sur un titre pour afficher les paroles.`;
+                        searchInputElement.style.display = 'block';
                         displayedSongIds = Object.keys(allSongs).sort((a, b) => {
                             return allSongs[a].title.localeCompare(allSongs[b].title);
                         });
