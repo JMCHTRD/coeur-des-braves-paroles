@@ -21,30 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Une fois le header chargé, on configure la navigation et le lien actif.
                     setupNavigation();
                     setActiveLink(basePath);
-                    
-                    // Pour éviter les problèmes de timing avec le chargement des polices et des images (logo),
-                    // on attend que tout soit prêt avant d'ajuster le padding.
-                    const logo = document.querySelector('#main-nav img');
-
-                    // 1. Promesse pour le chargement des polices
-                    const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
-
-                    // 2. Promesse pour le chargement du logo
-                    const logoReady = new Promise(resolve => {
-                        if (logo && !logo.complete) {
-                            // On résout la promesse une fois le logo chargé ou en erreur
-                            logo.addEventListener('load', resolve, { once: true });
-                            logo.addEventListener('error', resolve, { once: true });
-                        } else {
-                            // Le logo est déjà chargé (ex: cache)
-                            resolve();
-                        }
-                    });
-
-                    // 3. On attend que les deux promesses soient résolues
-                    Promise.all([fontsReady, logoReady]).then(() => {
-                        adjustMainPadding();
-                    });
+                    // On ajuste le padding une première fois. Il sera réajusté si nécessaire.
+                    adjustMainPadding();
                 })
                 .catch(error => console.error('Error loading header:', error));
         }
@@ -130,5 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Lance le chargement du header et du footer.
     initializeDynamicContent();
+    // On ajoute des écouteurs pour recalculer le padding lors du redimensionnement
+    // et après le chargement complet de la page (images, polices), ce qui est plus robuste.
     window.addEventListener('resize', adjustMainPadding);
+    window.addEventListener('load', adjustMainPadding);
 }); 
