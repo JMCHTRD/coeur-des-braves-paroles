@@ -21,12 +21,30 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Une fois le header chargé, on configure la navigation et le lien actif.
                     setupNavigation();
                     setActiveLink(basePath);
-                    // On s'assure que le padding est ajusté après le chargement du logo.
+                    
+                    // Pour éviter les problèmes de timing avec le chargement des polices et des images (logo),
+                    // on attend que tout soit prêt avant d'ajuster le padding.
                     const logo = document.querySelector('#main-nav img');
-                    if (logo && !logo.complete) {
-                        logo.addEventListener('load', adjustMainPadding);
-                    }
-                    adjustMainPadding();
+
+                    // 1. Promesse pour le chargement des polices
+                    const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+
+                    // 2. Promesse pour le chargement du logo
+                    const logoReady = new Promise(resolve => {
+                        if (logo && !logo.complete) {
+                            // On résout la promesse une fois le logo chargé ou en erreur
+                            logo.addEventListener('load', resolve, { once: true });
+                            logo.addEventListener('error', resolve, { once: true });
+                        } else {
+                            // Le logo est déjà chargé (ex: cache)
+                            resolve();
+                        }
+                    });
+
+                    // 3. On attend que les deux promesses soient résolues
+                    Promise.all([fontsReady, logoReady]).then(() => {
+                        adjustMainPadding();
+                    });
                 })
                 .catch(error => console.error('Error loading header:', error));
         }
@@ -113,6 +131,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // Lance le chargement du header et du footer.
     initializeDynamicContent();
     window.addEventListener('resize', adjustMainPadding);
-    // Assure un dernier ajustement après le chargement complet de la page (polices, images, etc.)
-    window.addEventListener('load', adjustMainPadding);
 }); 
