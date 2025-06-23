@@ -84,7 +84,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const navElement = document.getElementById('main-nav');
         const mainContentElement = document.getElementById('main-content');
         if (navElement && mainContentElement) {
-            const navHeight = navElement.offsetHeight;
+            // getBoundingClientRect().height est plus fiable et précis que offsetHeight,
+            // notamment sur les navigateurs mobiles qui peuvent avoir des comportements spécifiques.
+            const navHeight = navElement.getBoundingClientRect().height;
             mainContentElement.style.paddingTop = `${navHeight}px`;
         }
     }
